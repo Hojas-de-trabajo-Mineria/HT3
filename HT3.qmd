@@ -15,3 +15,13 @@ library(dplyr)
 pricesTrain <- read.csv("train.csv")
 pricesTest <- read.csv("test.csv")
 ```
+
+### Análisis Exploratorio
+
+```{r}
+
+View(pricesTrain)
+nrow(pricesTrain) 
+ncol(pricesTrain) 
+str(pricesTrain)
+```
