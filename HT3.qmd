@@ -4,3 +4,14 @@ author: "Majo Gil"
 format: html
 editor: visual
 ---
+
+## Hoja de trabajo 3
+
+```{r include=FALSE}
+
+library(corrplot)
+library(dplyr)
+
+pricesTrain <- read.csv("train.csv")
+pricesTest <- read.csv("test.csv")
+```
