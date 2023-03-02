@@ -1,0 +1,6 @@
+---
+title: "Análisis exploratorio"
+author: "Majo Gil"
+format: html
+editor: visual
+---
