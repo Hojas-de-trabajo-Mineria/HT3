@@ -25,3 +25,195 @@ nrow(pricesTrain)
 ncol(pricesTrain) 
 str(pricesTrain)
 ```
+
+#### Variables Categóricas:
+
+-   Id
+
+-   MSSubClass
+
+-   MSZoning
+
+-   Street
+
+-   Alley
+
+-   LotShape
+
+-   LandContour
+
+-   Utilities
+
+-   LotConfig
+
+-   LandSlope
+
+-   Neighborhood
+
+-   Condition 1
+
+-   Condition 2
+
+-   BldgType
+
+-   HouseStyle
+
+-   OverallQual
+
+-   OverallCond
+
+-   RoofStyle
+
+-   RoofMatl
+
+-   Exterior1st
+
+-   Exterior2nd
+
+-   MasVnrType
+
+-   ExterQual
+
+-   ExterCond
+
+-   Foundation
+
+-   BsmtQual
+
+-   BsmtCond
+
+-   BsmtExposure
+
+-   BsmtFinType1
+
+-   BsmtFinSF1
+
+-   BsmtFinType2
+
+-   Heating
+
+-   HeatingQC
+
+-   CentralAir
+
+-   Electrical
+
+-   Functional
+
+-   FireplaceQu
+
+-   GarageType
+
+-   GarageFinish
+
+-   GarageQual
+
+-   GarageCcond
+
+-   PavedDrive
+
+-   PoolQC
+
+-   Fence
+
+-   MiscFeature
+
+-   SaleType
+
+-   SaleCondition
+
+#### Variables Cuantitativas
+
+-   LotFrontage
+
+-   LotArea
+
+-   YearBuilt
+
+-   YearRemodAdd
+
+-   MasVnrArea
+
+-   BsmtFinSF1
+
+-   BsmtFinSF2
+
+-   BsmtUnfSF
+
+-   TotalBsmtSF
+
+-   1stFlrSF
+
+-   2ndFlrSF
+
+-   LowQualFinSF
+
+-   GrLivArea
+
+-   BsmtFullBath
+
+-   BsmtHalfBath
+
+-   FullBath
+
+-   HalfBath
+
+-   Bedroom
+
+-   Kitchen
+
+-   TotRmsAbvGrd
+
+-   Fireplaces
+
+-   FireplaceQu
+
+-   GarafeYrBlt
+
+-   GarageCars
+
+-   GarageArea
+
+-   WoodDeckSF
+
+-   OpenPorchSF
+
+-   EnclosedPorch
+
+-   3SsnPorch
+
+-   ScreenPorch
+
+-   PoolArea
+
+-   MiscVal
+
+-   MoSold
+
+-   YrSold
+
+#### Eliminación de variables 
+
+A continuación se eliminarán las variables que se consideran innecesarias para el modelo
+
+```{r}
+
+# Remove columns using select()
+pricesTrainDel <- pricesTrain %>% select(-c(Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition))
+
+## Ver df nuevo
+
+View(pricesTrainDel)
+str(pricesTrainDel)
+
+## Volver variables chr a int
+pricesTrainDel %>%
+  mutate(
+    MSZoning = factor(MSZoning, levels = c('RM', 'RP', 'RL', 'RH', 'I', 'FV', 'C', 'A'), labels = c(0,1,2,3,4,5,6,7)), 
+    Utilities = factor(Utilities, levels = c('ELO','NoSeWa', 'NoSewr', 'AllPub'), labels = c(0,1,2,3)), 
+    HouseStyle = factor(HouseStyle, levels = c('SLvl', 'SFoyer', '2.5Unf', '2.5Fin', '2Story', '1.5Unf', '1.5Fin', '1Story'), labels = c(0,1,2,3,4,5,6,7)))
+#  mutate(MSZoning = recode(MSZoning, 'RM' = 0, 'RP' = 1, 'RL' = 2, 'RH' = 3, 'I' = 4, 'FV' = 5, 'C' = 6, 'A' = 7), Utilities = recode(Utilities, 'ELO' = 0, 'NoSeWa' = 1, 'NoSewr' = 2, 'AllPub' = 3), HouseStyle = recode(HouseStyle, 'SLv1' = 0, 'SFoyer' = 1))
+
+
+str(pricesTrainDel)
+```
