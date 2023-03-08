@@ -11,6 +11,11 @@ editor: visual
 
 library(corrplot)
 library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(psych)
+library(corrplot)
+library(RColorBrewer)
 
 pricesTrain <- read.csv("train.csv")
 pricesTest <- read.csv("test.csv")
@@ -192,26 +197,54 @@ str(pricesTrain)
 
 -   YrSold
 
-#### Eliminación de variables 
+#### Eliminación de variables
 
 A continuación se eliminarán las variables que se consideran innecesarias para el modelo
+
+##### Gráfica de correlación de las variables
+
+```{r}
+# Graficar cada variable
+#set.seed(100)
+# Eliminar cualitativas
+pricesTrainGraph <- pricesTrain %>% select(-c(Id,MSSubClass, MSZoning, Street, Alley, LotShape, LandContour, Utilities, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, HouseStyle, OverallQual, OverallCond, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, ExterQual, ExterCond, Foundation, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinSF1, BsmtFinType2, Heating, HeatingQC, CentralAir, Electrical, Functional, FireplaceQu, GarageType, GarageFinish, GarageQual, GarageCond, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, KitchenQual))
+
+# pairs(pricesTrainGraph)
+# plot(pricesTrainGraph)
+
+corPlot(pricesTrainGraph) # Correlación de todas las variables numéricas
+
+
+cor(pricesTrainGraph[ , colnames(pricesTrainGraph) != "SalePrice"], pricesTrainGraph$SalePrice)
+
+
+mcor <- cor(x = pricesTrainGraph$SalePrice, y = pricesTrainGraph[0:32], use="complete.obs")
+corrplot(mcor,method = 'shade',tl.cex = 1,
+         col = COL2('PRGn'), diag = FALSE)
+# pricesTrainGraph <- melt (pricesTrainGraph, id.vars = 'SalePrice', variable.name = 'Feature')
+
+
+
+```
+
+De este modo podemos ver que las variables BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal no tienen nigún tipo de correlación y podrían afectar de manera negativa en el modelo, de modo que se eliminarán así como la mayoría de variables cualitativas. En total se eliminarán las siguientes variables : *Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal*
+
+##### Eliminación de variables
 
 ```{r}
 
 # Remove columns using select()
-pricesTrainDel <- pricesTrain %>% select(-c(Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition))
+pricesTrainDel <- pricesTrain %>% select(-c(Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal))
+
 
 ## Ver df nuevo
 
-View(pricesTrainDel)
-str(pricesTrainDel)
-
 ## Volver variables chr a int
-pricesTrainDel %>%
-  mutate(
-    MSZoning = factor(MSZoning, levels = c('RM', 'RP', 'RL', 'RH', 'I', 'FV', 'C', 'A'), labels = c(0,1,2,3,4,5,6,7)), 
-    Utilities = factor(Utilities, levels = c('ELO','NoSeWa', 'NoSewr', 'AllPub'), labels = c(0,1,2,3)), 
-    HouseStyle = factor(HouseStyle, levels = c('SLvl', 'SFoyer', '2.5Unf', '2.5Fin', '2Story', '1.5Unf', '1.5Fin', '1Story'), labels = c(0,1,2,3,4,5,6,7)))
+## pricesTrainDel %>%
+##  mutate(
+#    MSZoning = factor(MSZoning, levels = c('RM', 'RP', 'RL', 'RH', 'I', 'FV', 'C', 'A'), labels = c(0,1,2,3,4,5,6,7)), 
+#    Utilities = factor(Utilities, levels = c('ELO','NoSeWa', 'NoSewr', 'AllPub'), labels = c(0,1,2,3)), 
+#    HouseStyle = factor(HouseStyle, levels = c('SLvl', 'SFoyer', '2.5Unf', '2.5Fin', '2Story', '1.5Unf', '1.5Fin', '1Story'), labels = c(0,1,2,3,4,5,6,7)))
 #  mutate(MSZoning = recode(MSZoning, 'RM' = 0, 'RP' = 1, 'RL' = 2, 'RH' = 3, 'I' = 4, 'FV' = 5, 'C' = 6, 'A' = 7), Utilities = recode(Utilities, 'ELO' = 0, 'NoSeWa' = 1, 'NoSewr' = 2, 'AllPub' = 3), HouseStyle = recode(HouseStyle, 'SLv1' = 0, 'SFoyer' = 1))
 
 
