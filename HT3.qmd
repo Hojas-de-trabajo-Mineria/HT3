@@ -227,7 +227,7 @@ corrplot(mcor,method = 'shade',tl.cex = 1,
 
 ```
 
-De este modo podemos ver que las variables BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal no tienen nigún tipo de correlación y podrían afectar de manera negativa en el modelo, de modo que se eliminarán así como la mayoría de variables cualitativas. En total se eliminarán las siguientes variables : *Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal*
+De este modo podemos ver que las variables BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal no tienen nigún tipo de correlación y podrían afectar de manera negativa en el modelo, de modo que se eliminarán así como la mayoría de variables cualitativas. En total se eliminarán las siguientes variables : *Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal*
 
 ##### Eliminación de variables
 
