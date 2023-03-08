@@ -258,4 +258,106 @@ p <- 0.7
 corte <- sample(nrow(pricesTrain), nrow(pricesTrain) * p)
 train <- pricesTrain[corte,]
 test <- pricesTrain[-corte,]
+
+modelo <- lm(formula = `SalePrice`~`GrLivArea`, data = train)
+summary(modelo)
+```
+
+\## VALIDACIÓN DEL MODELO
+
+\### Significancia global
+
+Ho: \\beta\_{costos}=0\$\$
+
+\$\$Ha: \\text{Alguno de los coeficientes es diferente de cero}\$\$
+
+En la tabla anterior se puede observar que la prueba F produce un \$valor-p = 2.2\\times10\^{-16}\$ lo cual indica que el modelo tiene una significancia global.
+
+\### Significancia parcial
+
+\$\$Ho: \\beta\_{\\text{costo}}=0\$\$
+
+\$\$Ha: \\beta\_{\\text{costo}}\\neq 0\$\$
+
+Con un \$valor-p = 2.2\\times10\^{-16}\$ podemos afirmar que el coeficiente del costo asociado a las ventas, es diferente de cero, por lo que la variable "costo", es significativa en el modelo generado.
+
+\## COEFICIENDE DE DETERMINACIÓN:
+
+El coeficiete de determinación del modelo es \$r\^2 = 0.4877\$, lo cual indica que el 48.7% de la variabilidad del fenómeno esta siendo explicado por el modelo generado.
+
+El \$r\^2\$ ajustado se encuentra bastante cercado al coeficiente de determinación, por lo que la colinealidad no es un problema que nos deba preocupar.
+
+\## ANÁLISIS DE RESIDUALES
+
+\### Normalidad (Prueba de lillie)
+
+\$\$Ho: \\text{Normalidad en los residuales}\$\$
+
+\$\$Ha: \\text{No hay normalidad en los residuales}\$\$
+
+```{r}
+library(nortest)
+lillie.test(modelo$residuals)
+```
+
+El test anterior nos brinda un \$valor-p =2.2\\times10\^{-16} \< 0.05\$, por lo que tenemos evidencia suficiente para rechazar la hipótesis nula, y con una significancia de 0.05, los residuales no tienen un comportamiento normal. Por lo que no se podria recomendar la utilización del modelo generado.
+
+\### VARIANZA CONSTANTE (Homocedasticidad)
+
+Utilizaremos la prueba de Breusch Pagan.
+
+\$\$Ho: \\text{homocedasticidad}\$\$
+
+\$\$ Ha: \\text{no homocedasticidad}\$\$
+
+```{r, message=FALSE, warning=FALSE}
+library(lmtest)
+
+bptest(modelo)
+```
+
+Con un \$valor-p= 2.2\\times10\^{-16}\<0.05\$, existe evidencia de falta de homocedasticidad, por lo que podemos suponer que la varianza de los resiudales no es constante.
+
+\## Independencia de los residuos
+
+Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelación entre los residuales.
+
+\$\$Ho: \\text{Los residuos estan autocorrelacionados}\$\$
+
+\$\$Ha: \\text{No existe autocorrelación en los residuales}\$\$
+
+```{r}
+dwtest(modelo)
+```
+
+El \$valor-p=9854 \>0.05\$ indica que los residuales están autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes. por lo cual no es recomendado utilizar el modelo
+
+```{r}
+t.test(modelo$residuals)
+```
+
+\$\$Ho: \\mu\_{residuales}=0\$\$
+
+\$\$Ha: \\mu\_{residuales}\\neq 0\$\$
+
+Con un \$valor-p = 1\$ no hay evidencia para rechazar la hipótesis nula, por lo que parece razonable afirmar que la media de los residuales es igual a cero.
+
+\## CONCLUSIÓN GENERAL
+
+El modelo generado es:
+
+\$\\hat y = 22245.586+3.221x_1\$
+
+donde:
+
+\$\$x_1 = \\text{area de la casa}\$\$
+
+aunque no es recomendado utilizarlo por la dependencia de los residuos y falta de normalidad
+
+```{r}
+a<-predict(modelo,newdata=data.frame(GrLivArea=test$GrLivArea))
+b<-mean(a-test$GrLivArea)
+plot(test$GrLivArea,a,col="green")
+par(new=TRUE)
+plot(test$GrLivArea,test$SalePrice,col="blue")
 ```
