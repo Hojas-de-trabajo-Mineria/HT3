@@ -18,7 +18,6 @@ library(corrplot)
 library(RColorBrewer)
 
 pricesTrain <- read.csv("train.csv")
-pricesTest <- read.csv("test.csv")
 ```
 
 ### Análisis Exploratorio
@@ -249,4 +248,14 @@ pricesTrainDel <- pricesTrain %>% select(-c(Id, MSSubClass, Street, Alley, LotSh
 
 
 str(pricesTrainDel)
+```
+
+# Regresiones
+
+```{r muestreo}
+set.seed(123)
+p <- 0.7
+corte <- sample(nrow(pricesTrain), nrow(pricesTrain) * p)
+train <- pricesTrain[corte,]
+test <- pricesTrain[-corte,]
 ```
