@@ -18,6 +18,7 @@ library(corrplot)
 library(RColorBrewer)
 library(nortest)
 library(lmtest)
+library(jtools)
 
 pricesTrain <- read.csv("train.csv")
 ```
@@ -263,113 +264,112 @@ train['YearsBuilt'] = 2023 - train$YearBuilt
 train['YearsRem'] = 2023 - train$YearRemodAdd
 
 test <- pricesTrain[-corte,]
-<<<<<<< Updated upstream
 
-modelo <- lm(formula = `SalePrice`~`GrLivArea`, data = train)
-summary(modelo)
+modelo1 <- lm(formula = `SalePrice`~`GrLivArea`, data = train)
+summary(modelo1)
 ```
 
-\## VALIDACI覰 DEL MODELO
+## VALIDACI脫N DEL MODELO
 
-\### Significancia global
+### Significancia global
 
-Ho: \\beta\_{costos}=0\$\$
+$$Ho: \\beta\_{costos}=0$$
 
-\$\$Ha: \\text{Alguno de los coeficientes es diferente de cero}\$\$
+$$Ha: \\text{Alguno de los coeficientes es diferente de cero}$$
 
-En la tabla anterior se puede observar que la prueba F produce un \$valor-p = 2.2\\times10\^{-16}\$ lo cual indica que el modelo tiene una significancia global.
+En la tabla anterior se puede observar que la prueba F produce un $valor-p = 2.2\times10^{-16}$ lo cual indica que el modelo tiene una significancia global.
 
-\### Significancia parcial
+### Significancia parcial
 
-\$\$Ho: \\beta\_{\\text{costo}}=0\$\$
+$$Ho: \\beta\_{\\text{costo}}=0$$
 
-\$\$Ha: \\beta\_{\\text{costo}}\\neq 0\$\$
+$$Ha: \\beta\_{\\text{costo}}\\neq 0$$
 
-Con un \$valor-p = 2.2\\times10\^{-16}\$ podemos afirmar que el coeficiente del costo asociado a las ventas, es diferente de cero, por lo que la variable "costo", es significativa en el modelo generado.
+Con un $valor-p = 2.2\times10^{-16}$ podemos afirmar que el coeficiente del costo asociado a las ventas, es diferente de cero, por lo que la variable "costo", es significativa en el modelo generado.
 
-\## COEFICIENDE DE DETERMINACI覰:
+## COEFICIENDE DE DETERMINACI?N:
 
-El coeficiete de determinaci髇 del modelo es \$r\^2 = 0.4877\$, lo cual indica que el 48.7% de la variabilidad del fen髆eno esta siendo explicado por el modelo generado.
+El coeficiete de determinaci?n del modelo es $r^2 = 0.4877$, lo cual indica que el 48.7% de la variabilidad del fen?meno esta siendo explicado por el modelo generado.
 
-El \$r\^2\$ ajustado se encuentra bastante cercado al coeficiente de determinaci髇, por lo que la colinealidad no es un problema que nos deba preocupar.
+El $r^2$ ajustado se encuentra bastante cercado al coeficiente de determinaci贸n, por lo que la colinealidad no es un problema que nos deba preocupar.
 
-\## AN罫ISIS DE RESIDUALES
+## AN脕LISIS DE RESIDUALES
 
-\### Normalidad (Prueba de lillie)
+### Normalidad (Prueba de lillie)
 
-\$\$Ho: \\text{Normalidad en los residuales}\$\$
+$$Ho: \text{Normalidad en los residuales}$$
 
-\$\$Ha: \\text{No hay normalidad en los residuales}\$\$
+$$Ha: \text{No hay normalidad en los residuales}$$
 
 ```{r}
 library(nortest)
-lillie.test(modelo$residuals)
+lillie.test(modelo1$residuals)
 ```
 
-El test anterior nos brinda un \$valor-p =2.2\\times10\^{-16} \< 0.05\$, por lo que tenemos evidencia suficiente para rechazar la hip髏esis nula, y con una significancia de 0.05, los residuales no tienen un comportamiento normal. Por lo que no se podria recomendar la utilizaci髇 del modelo generado.
+El test anterior nos brinda un $valor-p =2.2\times10^{-16} < 0.05$, por lo que tenemos evidencia suficiente para rechazar la hip?tesis nula, y con una significancia de 0.05, los residuales no tienen un comportamiento normal. Por lo que no se podria recomendar la utilizaci?n del modelo generado.
 
-\### VARIANZA CONSTANTE (Homocedasticidad)
+### VARIANZA CONSTANTE (Homocedasticidad)
 
 Utilizaremos la prueba de Breusch Pagan.
 
-\$\$Ho: \\text{homocedasticidad}\$\$
+$$Ho: \text{homocedasticidad}$$
 
-\$\$ Ha: \\text{no homocedasticidad}\$\$
+$$ Ha: \text{no homocedasticidad}$$
 
 ```{r, message=FALSE, warning=FALSE}
 library(lmtest)
 
-bptest(modelo)
+bptest(modelo1)
 ```
 
-Con un \$valor-p= 2.2\\times10\^{-16}\<0.05\$, existe evidencia de falta de homocedasticidad, por lo que podemos suponer que la varianza de los resiudales no es constante.
+Con un $valor-p= 2.2\times10^{-16}<0.05$, existe evidencia de falta de homocedasticidad, por lo que podemos suponer que la varianza de los resiudales no es constante.
 
-\## Independencia de los residuos
+## Independencia de los residuos
 
-Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelaci髇 entre los residuales.
+Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelaci?n entre los residuales.
 
-\$\$Ho: \\text{Los residuos estan autocorrelacionados}\$\$
+$$Ho: \text{Los residuos estan autocorrelacionados}$$
 
-\$\$Ha: \\text{No existe autocorrelaci髇 en los residuales}\$\$
+$$Ha: \text{No existe autocorrelaci?n en los residuales}$$
 
 ```{r}
-dwtest(modelo)
+dwtest(modelo1)
 ```
 
-El \$valor-p=9854 \>0.05\$ indica que los residuales est醤 autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes. por lo cual no es recomendado utilizar el modelo
+El $valor-p=9854 >0.05$ indica que los residuales est?n autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes. por lo cual no es recomendado utilizar el modelo
 
 ```{r}
-t.test(modelo$residuals)
+t.test(modelo1$residuals)
 ```
 
-\$\$Ho: \\mu\_{residuales}=0\$\$
+$$Ho: \mu_{residuales}=0$$
 
-\$\$Ha: \\mu\_{residuales}\\neq 0\$\$
+$$Ha: \mu_{residuales}\neq 0$$
 
-Con un \$valor-p = 1\$ no hay evidencia para rechazar la hip髏esis nula, por lo que parece razonable afirmar que la media de los residuales es igual a cero.
+Con un $valor-p = 1$ no hay evidencia para rechazar la hip贸tesis nula, por lo que parece razonable afirmar que la media de los residuales es igual a cero.
 
-\## CONCLUSI覰 GENERAL
+## CONCLUSI?N GENERAL
 
 El modelo generado es:
 
-\$\\hat y = 22245.586+3.221x_1\$
+$\hat y = 22245.586+3.221x_1$
 
 donde:
 
-\$\$x_1 = \\text{area de la casa}\$\$
+$$x_1 = \text{area de la casa}$$
 
 aunque no es recomendado utilizarlo por la dependencia de los residuos y falta de normalidad
 
 ```{r}
-a<-predict(modelo,newdata=data.frame(GrLivArea=test$GrLivArea))
+a<-predict(modelo1,newdata=data.frame(GrLivArea=test$GrLivArea))
 b<-mean(a-test$GrLivArea)
 plot(test$GrLivArea,a,col="green")
 par(new=TRUE)
 plot(test$GrLivArea,test$SalePrice,col="blue")
-=======
+
 test['YearsBuilt'] = 2023 - test$YearBuilt
 test['YearsRem'] = 2023 - test$YearRemodAdd
->>>>>>> Stashed changes
+
 ```
 
 ### Regresi贸n lineal multivariable
@@ -379,7 +379,7 @@ test['YearsRem'] = 2023 - test$YearRemodAdd
 ```{r multivariable}
 str(train)
 numericasTrain <- train[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'YearsBuilt', 'YearsRem', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'X1stFlrSF', 'X2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice')]
-numericasTest <- test[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'YearsBuilt', 'YearsRem', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'X1stFlrSF', 'X2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice'
+numericasTest <- test[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'YearsBuilt', 'YearsRem', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'X1stFlrSF', 'X2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice')]
 ```
 
 #### Correlaci贸n de las variables
@@ -431,56 +431,63 @@ summary(mejorModelo)
 Dado que \$ \text{valor-p} \< 2 \times 10\^{-16} \< 0.05 \implies H_0 \$ se rechaza, por lo cual es razonable afirmar que el modelo tiene significancia global.
 
 ##### Significancia individual
-De la tabla anterior tenemos que, con un nivel de significancia de 5%, las variables BsmtFinSF2, LowQualFinSF, OpenPorchSF, X3SsnPorch, ScreenPorch, PoolArea,  MoSold no poseen significancia individual. Por lo tanto, procedamos a crear un modelo sin estas variables.
+
+De la tabla anterior tenemos que, con un nivel de significancia de 5%, las variables BsmtFinSF2, LowQualFinSF, OpenPorchSF, X3SsnPorch, ScreenPorch, PoolArea, MoSold no poseen significancia individual. Por lo tanto, procedamos a crear un modelo sin estas variables.
 
 ##### Nuevo modelo
+
 ```{r nuevoModelo}
 mdLnMtvS <- lm(SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + EnclosedPorch, data = newNumericasTrain)
 summary(mdLnMtvS)
 ```
+
 ##### An谩lisis de residuales
+
 ###### Normalidad
+
 ```{r normalidad}
 qqnorm(mdLnMtvS$residuals)
 qqline(mdLnMtvS$residuals)
 ```
+
 Es discutible el hablar de normalidad utilizando la gr谩fica anterior, pues en los datos del centro pareciera existir, pero los puntos de los extremos se alejan demasiado de la l铆nea de los 45掳. Por lo que se realizar谩 una prueba de Lilliefors para determinar si existe dicha normalidad
 
-$$ H_0: \text{Normalidad en los residuales} $$
-$$ H_1: \text{No hay normalidad en los residuales} $$
+$$ H_0: \text{Normalidad en los residuales} $$ $$ H_1: \text{No hay normalidad en los residuales} $$
 
 ```{r}
 lillie.test(mdLnMtvS$residuals)
 ```
 
-El test anterior nos brinda un $ \text{valor-p} = 2.2 \times 10^{-16} < \alpha = 0.05 \implies H_0 $ debe ser rechazada y, por lo tanto, no existe evidencia suficiente para afirmar que los residuales se comportan de forma normal.
+El test anterior nos brinda un \$ \text{valor-p} = 2.2 \times 10\^{-16} \< \alpha = 0.05 \implies H_0 \$ debe ser rechazada y, por lo tanto, no existe evidencia suficiente para afirmar que los residuales se comportan de forma normal.
 
 ###### Homocedasticidad
-Utilizaremos la prueba de Breusch Pagan.
-$$ H_0: \text{Homocedasticidad} $$
-$$ H_1: \text{No homocedasticidad} $$
+
+Utilizaremos la prueba de Breusch Pagan. $$ H_0: \text{Homocedasticidad} $$ $$ H_1: \text{No homocedasticidad} $$
+
 ```{r homocedasticidad}
 bptest(mdLnMtvS)
 ```
-El test anterior devuelve un $ \text{valor-p} = 2.2 \times 10^{-16} < \alpha 0.05 \implies H_0 $ debe ser rechazada, por lo que no existe evidencia para afirmar homocedasticidad.
+
+El test anterior devuelve un \$ \text{valor-p} = 2.2 \times 10\^{-16} \< \alpha 0.05 \implies H_0 \$ debe ser rechazada, por lo que no existe evidencia para afirmar homocedasticidad.
 
 ###### Independencia
 
 ```{r independenciaGrafica}
 plot(mdLnMtvS$fitted.values, mdLnMtvS$residuals)
 ```
+
 En la gr谩fica se puede observar que los residuales siguen un patr贸n bien definido, lo cual es un claro indicador de la ausencia de independencia.
 
 ###### Independencia de los residuales
+
 Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelaci贸n entre los residuales.
 
-$$ H_0:  \text{Los residuales estan autocorrelacionados}$$
-$$ H_1: \text{No existe autocorrelaci贸n en los residuales}$$
-
+$$ H_0:  \text{Los residuales estan autocorrelacionados}$$ $$ H_1: \text{No existe autocorrelaci贸n en los residuales}$$
 
 ```{r independencia}
 dwtest(mdLnMtvS)
 ```
+
 El test anterior devuelve un $valor-p = 0.8921 > \alpha = 0.05 \implies H_0$ no puede ser rechazada, esto indica que los residuales est谩n autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes.
 
 ###### Valor esperado igual a 0
@@ -489,16 +496,35 @@ El test anterior devuelve un $valor-p = 0.8921 > \alpha = 0.05 \implies H_0$ no 
 t.test(mdLnMtvS$residuals)
 
 ```
-$$ H_0: \mu_{residuales} = 0 $$
-$$ H_1: \mu_{residuales} \neq 0 $$
-Con un $valor-p = 1 > \alpha = 0.05 \implies H_0 $ no puede ser rechazada, por lo que es posible afirmar que la media de los residuales es igual a 0
+
+$$ H_0: \mu_{residuales} = 0 $$ $$ H_1: \mu_{residuales} \neq 0 $$
+
+Con un $valor-p = 1 > \alpha = 0.05 \implies H_0$ no puede ser rechazada, por lo que es posible afirmar que la media de los residuales es igual a 0
 
 ###### Conclusi贸n
+
 Debido a que el modelo no cumple con los supuestos, no se recomienda su uso para predecir el precio de las casas en Ames y Iowa.
 
 ##### Predicci贸n
+
 ```{r prediccion}
 prediccion <- predict(mdLnMtvS, newdata = test)
 mean((prediccion - test$SalePrice)^2)
 ```
+
 Podemos ver que el error medio cuadrado es de 1303358790, lo cual confirma la conclusi贸n anterior que el modelo no es adecuado para la predicci贸n del precio de las casas.
+
+### Comparaci贸n de los modelos generados
+
+Veamos que tenemos el modelo generado por una sola variable, el modelo generado por todas las variables y el mejor modelo encontrado, utilizando solo algunas de las variables. A continuaci贸n podemos ver las gr谩ficas de los tres modelos
+
+```{r}
+pricesTest <- read.csv("test.csv")
+plot(predict(modelo1, newdata = pricesTest), col="green")
+par(new=TRUE)
+plot(predict(mdLnlMtv, newdata = pricesTest), col="red")
+par(new=TRUE)
+plot(predict(mdLnMtvS, newdata = pricesTest), col="blue")
+```
+
+Dado que los modelos 2 y 3 son multivariables, es imposible graficarlos en dos dimensiones, por lo que nos guiamos m谩s que todo por los resultados obtenidos en las pruebas. Podemos ver claramente que el modelo 1 (verde) es el peor, el que solo utiliza una variable. Esto es debido a que los supuestos no se cumplen, y los datos se ajustan en menos del $50\%$ de los datos. Por otro lado tenemos el modelo utilizando todas las variables (rojo), el cual tampoco es fectivo, prinicpalmente porque muchas variables muestran correlaci贸n entre s铆, as铆 como el mejor modelo (azul), el cual vemos que es muy similar al anterior. Ambos se ajustan a los datos reales en un $74\%$. De cualqueir manera, no se recomienda la utilizaci贸n de ninguno de estos modelos para la predicci贸n del precio de las casas

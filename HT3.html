@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Majo Gil">
+
+<title>Análisis exploratorio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="HT3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="HT3_files/libs/quarto-html/quarto.js"></script>
+<script src="HT3_files/libs/quarto-html/popper.min.js"></script>
+<script src="HT3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="HT3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="HT3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="HT3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="HT3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="HT3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="HT3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Análisis exploratorio</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Majo Gil </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="hoja-de-trabajo-3" class="level1">
+<h1>Hoja de trabajo 3</h1>
+<section id="análisis-exploratorio" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-exploratorio">Análisis Exploratorio</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(pricesTrain)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pricesTrain) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1460</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(pricesTrain) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 81</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pricesTrain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1460 obs. of  81 variables:
+ $ Id           : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ MSSubClass   : int  60 20 60 70 60 50 20 60 50 190 ...
+ $ MSZoning     : chr  "RL" "RL" "RL" "RL" ...
+ $ LotFrontage  : int  65 80 68 60 84 85 75 NA 51 50 ...
+ $ LotArea      : int  8450 9600 11250 9550 14260 14115 10084 10382 6120 7420 ...
+ $ Street       : chr  "Pave" "Pave" "Pave" "Pave" ...
+ $ Alley        : chr  NA NA NA NA ...
+ $ LotShape     : chr  "Reg" "Reg" "IR1" "IR1" ...
+ $ LandContour  : chr  "Lvl" "Lvl" "Lvl" "Lvl" ...
+ $ Utilities    : chr  "AllPub" "AllPub" "AllPub" "AllPub" ...
+ $ LotConfig    : chr  "Inside" "FR2" "Inside" "Corner" ...
+ $ LandSlope    : chr  "Gtl" "Gtl" "Gtl" "Gtl" ...
+ $ Neighborhood : chr  "CollgCr" "Veenker" "CollgCr" "Crawfor" ...
+ $ Condition1   : chr  "Norm" "Feedr" "Norm" "Norm" ...
+ $ Condition2   : chr  "Norm" "Norm" "Norm" "Norm" ...
+ $ BldgType     : chr  "1Fam" "1Fam" "1Fam" "1Fam" ...
+ $ HouseStyle   : chr  "2Story" "1Story" "2Story" "2Story" ...
+ $ OverallQual  : int  7 6 7 7 8 5 8 7 7 5 ...
+ $ OverallCond  : int  5 8 5 5 5 5 5 6 5 6 ...
+ $ YearBuilt    : int  2003 1976 2001 1915 2000 1993 2004 1973 1931 1939 ...
+ $ YearRemodAdd : int  2003 1976 2002 1970 2000 1995 2005 1973 1950 1950 ...
+ $ RoofStyle    : chr  "Gable" "Gable" "Gable" "Gable" ...
+ $ RoofMatl     : chr  "CompShg" "CompShg" "CompShg" "CompShg" ...
+ $ Exterior1st  : chr  "VinylSd" "MetalSd" "VinylSd" "Wd Sdng" ...
+ $ Exterior2nd  : chr  "VinylSd" "MetalSd" "VinylSd" "Wd Shng" ...
+ $ MasVnrType   : chr  "BrkFace" "None" "BrkFace" "None" ...
+ $ MasVnrArea   : int  196 0 162 0 350 0 186 240 0 0 ...
+ $ ExterQual    : chr  "Gd" "TA" "Gd" "TA" ...
+ $ ExterCond    : chr  "TA" "TA" "TA" "TA" ...
+ $ Foundation   : chr  "PConc" "CBlock" "PConc" "BrkTil" ...
+ $ BsmtQual     : chr  "Gd" "Gd" "Gd" "TA" ...
+ $ BsmtCond     : chr  "TA" "TA" "TA" "Gd" ...
+ $ BsmtExposure : chr  "No" "Gd" "Mn" "No" ...
+ $ BsmtFinType1 : chr  "GLQ" "ALQ" "GLQ" "ALQ" ...
+ $ BsmtFinSF1   : int  706 978 486 216 655 732 1369 859 0 851 ...
+ $ BsmtFinType2 : chr  "Unf" "Unf" "Unf" "Unf" ...
+ $ BsmtFinSF2   : int  0 0 0 0 0 0 0 32 0 0 ...
+ $ BsmtUnfSF    : int  150 284 434 540 490 64 317 216 952 140 ...
+ $ TotalBsmtSF  : int  856 1262 920 756 1145 796 1686 1107 952 991 ...
+ $ Heating      : chr  "GasA" "GasA" "GasA" "GasA" ...
+ $ HeatingQC    : chr  "Ex" "Ex" "Ex" "Gd" ...
+ $ CentralAir   : chr  "Y" "Y" "Y" "Y" ...
+ $ Electrical   : chr  "SBrkr" "SBrkr" "SBrkr" "SBrkr" ...
+ $ X1stFlrSF    : int  856 1262 920 961 1145 796 1694 1107 1022 1077 ...
+ $ X2ndFlrSF    : int  854 0 866 756 1053 566 0 983 752 0 ...
+ $ LowQualFinSF : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ GrLivArea    : int  1710 1262 1786 1717 2198 1362 1694 2090 1774 1077 ...
+ $ BsmtFullBath : int  1 0 1 1 1 1 1 1 0 1 ...
+ $ BsmtHalfBath : int  0 1 0 0 0 0 0 0 0 0 ...
+ $ FullBath     : int  2 2 2 1 2 1 2 2 2 1 ...
+ $ HalfBath     : int  1 0 1 0 1 1 0 1 0 0 ...
+ $ BedroomAbvGr : int  3 3 3 3 4 1 3 3 2 2 ...
+ $ KitchenAbvGr : int  1 1 1 1 1 1 1 1 2 2 ...
+ $ KitchenQual  : chr  "Gd" "TA" "Gd" "Gd" ...
+ $ TotRmsAbvGrd : int  8 6 6 7 9 5 7 7 8 5 ...
+ $ Functional   : chr  "Typ" "Typ" "Typ" "Typ" ...
+ $ Fireplaces   : int  0 1 1 1 1 0 1 2 2 2 ...
+ $ FireplaceQu  : chr  NA "TA" "TA" "Gd" ...
+ $ GarageType   : chr  "Attchd" "Attchd" "Attchd" "Detchd" ...
+ $ GarageYrBlt  : int  2003 1976 2001 1998 2000 1993 2004 1973 1931 1939 ...
+ $ GarageFinish : chr  "RFn" "RFn" "RFn" "Unf" ...
+ $ GarageCars   : int  2 2 2 3 3 2 2 2 2 1 ...
+ $ GarageArea   : int  548 460 608 642 836 480 636 484 468 205 ...
+ $ GarageQual   : chr  "TA" "TA" "TA" "TA" ...
+ $ GarageCond   : chr  "TA" "TA" "TA" "TA" ...
+ $ PavedDrive   : chr  "Y" "Y" "Y" "Y" ...
+ $ WoodDeckSF   : int  0 298 0 0 192 40 255 235 90 0 ...
+ $ OpenPorchSF  : int  61 0 42 35 84 30 57 204 0 4 ...
+ $ EnclosedPorch: int  0 0 0 272 0 0 0 228 205 0 ...
+ $ X3SsnPorch   : int  0 0 0 0 0 320 0 0 0 0 ...
+ $ ScreenPorch  : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PoolArea     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PoolQC       : chr  NA NA NA NA ...
+ $ Fence        : chr  NA NA NA NA ...
+ $ MiscFeature  : chr  NA NA NA NA ...
+ $ MiscVal      : int  0 0 0 0 0 700 0 350 0 0 ...
+ $ MoSold       : int  2 5 9 2 12 10 8 11 4 1 ...
+ $ YrSold       : int  2008 2007 2008 2006 2008 2009 2007 2009 2008 2008 ...
+ $ SaleType     : chr  "WD" "WD" "WD" "WD" ...
+ $ SaleCondition: chr  "Normal" "Normal" "Normal" "Abnorml" ...
+ $ SalePrice    : int  208500 181500 223500 140000 250000 143000 307000 200000 129900 118000 ...</code></pre>
+</div>
+</div>
+<section id="variables-categóricas" class="level3">
+<h3 class="anchored" data-anchor-id="variables-categóricas">Variables Categóricas:</h3>
+<ul>
+<li><p>Id</p></li>
+<li><p>MSSubClass</p></li>
+<li><p>MSZoning</p></li>
+<li><p>Street</p></li>
+<li><p>Alley</p></li>
+<li><p>LotShape</p></li>
+<li><p>LandContour</p></li>
+<li><p>Utilities</p></li>
+<li><p>LotConfig</p></li>
+<li><p>LandSlope</p></li>
+<li><p>Neighborhood</p></li>
+<li><p>Condition 1</p></li>
+<li><p>Condition 2</p></li>
+<li><p>BldgType</p></li>
+<li><p>HouseStyle</p></li>
+<li><p>OverallQual</p></li>
+<li><p>OverallCond</p></li>
+<li><p>RoofStyle</p></li>
+<li><p>RoofMatl</p></li>
+<li><p>Exterior1st</p></li>
+<li><p>Exterior2nd</p></li>
+<li><p>MasVnrType</p></li>
+<li><p>ExterQual</p></li>
+<li><p>ExterCond</p></li>
+<li><p>Foundation</p></li>
+<li><p>BsmtQual</p></li>
+<li><p>BsmtCond</p></li>
+<li><p>BsmtExposure</p></li>
+<li><p>BsmtFinType1</p></li>
+<li><p>BsmtFinSF1</p></li>
+<li><p>BsmtFinType2</p></li>
+<li><p>Heating</p></li>
+<li><p>HeatingQC</p></li>
+<li><p>CentralAir</p></li>
+<li><p>Electrical</p></li>
+<li><p>Functional</p></li>
+<li><p>FireplaceQu</p></li>
+<li><p>GarageType</p></li>
+<li><p>GarageFinish</p></li>
+<li><p>GarageQual</p></li>
+<li><p>GarageCcond</p></li>
+<li><p>PavedDrive</p></li>
+<li><p>PoolQC</p></li>
+<li><p>Fence</p></li>
+<li><p>MiscFeature</p></li>
+<li><p>SaleType</p></li>
+<li><p>SaleCondition</p></li>
+</ul>
+</section>
+<section id="variables-cuantitativas" class="level3">
+<h3 class="anchored" data-anchor-id="variables-cuantitativas">Variables Cuantitativas</h3>
+<ul>
+<li><p>LotFrontage</p></li>
+<li><p>LotArea</p></li>
+<li><p>YearBuilt</p></li>
+<li><p>YearRemodAdd</p></li>
+<li><p>MasVnrArea</p></li>
+<li><p>BsmtFinSF1</p></li>
+<li><p>BsmtFinSF2</p></li>
+<li><p>BsmtUnfSF</p></li>
+<li><p>TotalBsmtSF</p></li>
+<li><p>1stFlrSF</p></li>
+<li><p>2ndFlrSF</p></li>
+<li><p>LowQualFinSF</p></li>
+<li><p>GrLivArea</p></li>
+<li><p>BsmtFullBath</p></li>
+<li><p>BsmtHalfBath</p></li>
+<li><p>FullBath</p></li>
+<li><p>HalfBath</p></li>
+<li><p>Bedroom</p></li>
+<li><p>Kitchen</p></li>
+<li><p>TotRmsAbvGrd</p></li>
+<li><p>Fireplaces</p></li>
+<li><p>FireplaceQu</p></li>
+<li><p>GarafeYrBlt</p></li>
+<li><p>GarageCars</p></li>
+<li><p>GarageArea</p></li>
+<li><p>WoodDeckSF</p></li>
+<li><p>OpenPorchSF</p></li>
+<li><p>EnclosedPorch</p></li>
+<li><p>3SsnPorch</p></li>
+<li><p>ScreenPorch</p></li>
+<li><p>PoolArea</p></li>
+<li><p>MiscVal</p></li>
+<li><p>MoSold</p></li>
+<li><p>YrSold</p></li>
+</ul>
+</section>
+<section id="eliminación-de-variables" class="level3">
+<h3 class="anchored" data-anchor-id="eliminación-de-variables">Eliminación de variables</h3>
+<p>A continuación se eliminarán las variables que se consideran innecesarias para el modelo</p>
+<section id="gráfica-de-correlación-de-las-variables" class="level4">
+<h4 class="anchored" data-anchor-id="gráfica-de-correlación-de-las-variables">Gráfica de correlación de las variables</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar cada variable</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed(100)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminar cualitativas</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pricesTrainGraph <span class="ot">&lt;-</span> pricesTrain <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Id,MSSubClass, MSZoning, Street, Alley, LotShape, LandContour, Utilities, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, HouseStyle, OverallQual, OverallCond, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, ExterQual, ExterCond, Foundation, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinSF1, BsmtFinType2, Heating, HeatingQC, CentralAir, Electrical, Functional, FireplaceQu, GarageType, GarageFinish, GarageQual, GarageCond, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, KitchenQual))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pairs(pricesTrainGraph)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(pricesTrainGraph)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">corPlot</span>(pricesTrainGraph) <span class="co"># Correlación de todas las variables numéricas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(pricesTrainGraph[ , <span class="fu">colnames</span>(pricesTrainGraph) <span class="sc">!=</span> <span class="st">"SalePrice"</span>], pricesTrainGraph<span class="sc">$</span>SalePrice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     [,1]
+LotFrontage            NA
+LotArea        0.26384335
+YearBuilt      0.52289733
+YearRemodAdd   0.50710097
+MasVnrArea             NA
+BsmtFinSF2    -0.01137812
+BsmtUnfSF      0.21447911
+TotalBsmtSF    0.61358055
+X1stFlrSF      0.60585218
+X2ndFlrSF      0.31933380
+LowQualFinSF  -0.02560613
+GrLivArea      0.70862448
+BsmtFullBath   0.22712223
+BsmtHalfBath  -0.01684415
+FullBath       0.56066376
+HalfBath       0.28410768
+BedroomAbvGr   0.16821315
+KitchenAbvGr  -0.13590737
+TotRmsAbvGrd   0.53372316
+Fireplaces     0.46692884
+GarageYrBlt            NA
+GarageCars     0.64040920
+GarageArea     0.62343144
+WoodDeckSF     0.32441344
+OpenPorchSF    0.31585623
+EnclosedPorch -0.12857796
+X3SsnPorch     0.04458367
+ScreenPorch    0.11144657
+PoolArea       0.09240355
+MiscVal       -0.02118958
+MoSold         0.04643225
+YrSold        -0.02892259</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mcor <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="at">x =</span> pricesTrainGraph<span class="sc">$</span>SalePrice, <span class="at">y =</span> pricesTrainGraph[<span class="dv">0</span><span class="sc">:</span><span class="dv">32</span>], <span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(mcor,<span class="at">method =</span> <span class="st">'shade'</span>,<span class="at">tl.cex =</span> <span class="dv">1</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">COL2</span>(<span class="st">'PRGn'</span>), <span class="at">diag =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pricesTrainGraph &lt;- melt (pricesTrainGraph, id.vars = 'SalePrice', variable.name = 'Feature')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>De este modo podemos ver que las variables BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal no tienen nigún tipo de correlación y podrían afectar de manera negativa en el modelo, de modo que se eliminarán así como la mayoría de variables cualitativas. En total se eliminarán las siguientes variables : <em>Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal</em></p>
+</section>
+<section id="eliminación-de-variables-1" class="level4">
+<h4 class="anchored" data-anchor-id="eliminación-de-variables-1">Eliminación de variables</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove columns using select()</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pricesTrainDel <span class="ot">&lt;-</span> pricesTrain <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, KitchenAbvGr, GarageYrBlt, EnclosedPorch, MiscVal))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Ver df nuevo</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Volver variables chr a int</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## pricesTrainDel %&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  mutate(</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    MSZoning = factor(MSZoning, levels = c('RM', 'RP', 'RL', 'RH', 'I', 'FV', 'C', 'A'), labels = c(0,1,2,3,4,5,6,7)), </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    Utilities = factor(Utilities, levels = c('ELO','NoSeWa', 'NoSewr', 'AllPub'), labels = c(0,1,2,3)), </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    HouseStyle = factor(HouseStyle, levels = c('SLvl', 'SFoyer', '2.5Unf', '2.5Fin', '2Story', '1.5Unf', '1.5Fin', '1Story'), labels = c(0,1,2,3,4,5,6,7)))</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  mutate(MSZoning = recode(MSZoning, 'RM' = 0, 'RP' = 1, 'RL' = 2, 'RH' = 3, 'I' = 4, 'FV' = 5, 'C' = 6, 'A' = 7), Utilities = recode(Utilities, 'ELO' = 0, 'NoSeWa' = 1, 'NoSewr' = 2, 'AllPub' = 3), HouseStyle = recode(HouseStyle, 'SLv1' = 0, 'SFoyer' = 1))</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pricesTrainDel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1460 obs. of  40 variables:
+ $ MSZoning    : chr  "RL" "RL" "RL" "RL" ...
+ $ LotFrontage : int  65 80 68 60 84 85 75 NA 51 50 ...
+ $ LotArea     : int  8450 9600 11250 9550 14260 14115 10084 10382 6120 7420 ...
+ $ Utilities   : chr  "AllPub" "AllPub" "AllPub" "AllPub" ...
+ $ HouseStyle  : chr  "2Story" "1Story" "2Story" "2Story" ...
+ $ OverallQual : int  7 6 7 7 8 5 8 7 7 5 ...
+ $ OverallCond : int  5 8 5 5 5 5 5 6 5 6 ...
+ $ YearBuilt   : int  2003 1976 2001 1915 2000 1993 2004 1973 1931 1939 ...
+ $ YearRemodAdd: int  2003 1976 2002 1970 2000 1995 2005 1973 1950 1950 ...
+ $ MasVnrArea  : int  196 0 162 0 350 0 186 240 0 0 ...
+ $ ExterQual   : chr  "Gd" "TA" "Gd" "TA" ...
+ $ ExterCond   : chr  "TA" "TA" "TA" "TA" ...
+ $ Foundation  : chr  "PConc" "CBlock" "PConc" "BrkTil" ...
+ $ BsmtFinSF1  : int  706 978 486 216 655 732 1369 859 0 851 ...
+ $ BsmtUnfSF   : int  150 284 434 540 490 64 317 216 952 140 ...
+ $ TotalBsmtSF : int  856 1262 920 756 1145 796 1686 1107 952 991 ...
+ $ HeatingQC   : chr  "Ex" "Ex" "Ex" "Gd" ...
+ $ CentralAir  : chr  "Y" "Y" "Y" "Y" ...
+ $ X1stFlrSF   : int  856 1262 920 961 1145 796 1694 1107 1022 1077 ...
+ $ X2ndFlrSF   : int  854 0 866 756 1053 566 0 983 752 0 ...
+ $ GrLivArea   : int  1710 1262 1786 1717 2198 1362 1694 2090 1774 1077 ...
+ $ BsmtFullBath: int  1 0 1 1 1 1 1 1 0 1 ...
+ $ FullBath    : int  2 2 2 1 2 1 2 2 2 1 ...
+ $ HalfBath    : int  1 0 1 0 1 1 0 1 0 0 ...
+ $ BedroomAbvGr: int  3 3 3 3 4 1 3 3 2 2 ...
+ $ TotRmsAbvGrd: int  8 6 6 7 9 5 7 7 8 5 ...
+ $ Functional  : chr  "Typ" "Typ" "Typ" "Typ" ...
+ $ Fireplaces  : int  0 1 1 1 1 0 1 2 2 2 ...
+ $ GarageType  : chr  "Attchd" "Attchd" "Attchd" "Detchd" ...
+ $ GarageCars  : int  2 2 2 3 3 2 2 2 2 1 ...
+ $ GarageArea  : int  548 460 608 642 836 480 636 484 468 205 ...
+ $ GarageCond  : chr  "TA" "TA" "TA" "TA" ...
+ $ WoodDeckSF  : int  0 298 0 0 192 40 255 235 90 0 ...
+ $ OpenPorchSF : int  61 0 42 35 84 30 57 204 0 4 ...
+ $ X3SsnPorch  : int  0 0 0 0 0 320 0 0 0 0 ...
+ $ ScreenPorch : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PoolArea    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ MoSold      : int  2 5 9 2 12 10 8 11 4 1 ...
+ $ YrSold      : int  2008 2007 2008 2006 2008 2009 2007 2009 2008 2008 ...
+ $ SalePrice   : int  208500 181500 223500 140000 250000 143000 307000 200000 129900 118000 ...</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="regresiones" class="level2">
+<h2 class="anchored" data-anchor-id="regresiones">Regresiones</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>corte <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(pricesTrain), <span class="fu">nrow</span>(pricesTrain) <span class="sc">*</span> p)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> pricesTrain[corte,]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>train[<span class="st">'YearsBuilt'</span>] <span class="ot">=</span> <span class="dv">2023</span> <span class="sc">-</span> train<span class="sc">$</span>YearBuilt</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>train[<span class="st">'YearsRem'</span>] <span class="ot">=</span> <span class="dv">2023</span> <span class="sc">-</span> train<span class="sc">$</span>YearRemodAdd</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> pricesTrain[<span class="sc">-</span>corte,]</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="st">`</span><span class="at">SalePrice</span><span class="st">`</span><span class="sc">~</span><span class="st">`</span><span class="at">GrLivArea</span><span class="st">`</span>, <span class="at">data =</span> train)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ GrLivArea, data = train)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-453793  -29549   -1656   21061  341553 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 22245.586   5392.000   4.126    4e-05 ***
+GrLivArea     104.847      3.366  31.147   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 56970 on 1019 degrees of freedom
+Multiple R-squared:  0.4877,    Adjusted R-squared:  0.4872 
+F-statistic: 970.1 on 1 and 1019 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-del-modelo" class="level2">
+<h2 class="anchored" data-anchor-id="validación-del-modelo">VALIDACIÓN DEL MODELO</h2>
+<section id="significancia-global" class="level3">
+<h3 class="anchored" data-anchor-id="significancia-global">Significancia global</h3>
+<p><span class="math display">\[Ho: \\beta\_{costos}=0\]</span></p>
+<p><span class="math display">\[Ha: \\text{Alguno de los coeficientes es diferente de cero}\]</span></p>
+<p>En la tabla anterior se puede observar que la prueba F produce un <span class="math inline">\(valor-p = 2.2\times10^{-16}\)</span> lo cual indica que el modelo tiene una significancia global.</p>
+</section>
+<section id="significancia-parcial" class="level3">
+<h3 class="anchored" data-anchor-id="significancia-parcial">Significancia parcial</h3>
+<p><span class="math display">\[Ho: \\beta\_{\\text{costo}}=0\]</span></p>
+<p><span class="math display">\[Ha: \\beta\_{\\text{costo}}\\neq 0\]</span></p>
+<p>Con un <span class="math inline">\(valor-p = 2.2\times10^{-16}\)</span> podemos afirmar que el coeficiente del costo asociado a las ventas, es diferente de cero, por lo que la variable “costo”, es significativa en el modelo generado.</p>
+</section>
+</section>
+<section id="coeficiende-de-determinacin" class="level2">
+<h2 class="anchored" data-anchor-id="coeficiende-de-determinacin">COEFICIENDE DE DETERMINACI?N:</h2>
+<p>El coeficiete de determinaci?n del modelo es <span class="math inline">\(r^2 = 0.4877\)</span>, lo cual indica que el 48.7% de la variabilidad del fen?meno esta siendo explicado por el modelo generado.</p>
+<p>El <span class="math inline">\(r^2\)</span> ajustado se encuentra bastante cercado al coeficiente de determinación, por lo que la colinealidad no es un problema que nos deba preocupar.</p>
+</section>
+<section id="análisis-de-residuales" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-residuales">ANÁLISIS DE RESIDUALES</h2>
+<section id="normalidad-prueba-de-lillie" class="level3">
+<h3 class="anchored" data-anchor-id="normalidad-prueba-de-lillie">Normalidad (Prueba de lillie)</h3>
+<p><span class="math display">\[Ho: \text{Normalidad en los residuales}\]</span></p>
+<p><span class="math display">\[Ha: \text{No hay normalidad en los residuales}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(modelo1<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Lilliefors (Kolmogorov-Smirnov) normality test
+
+data:  modelo1$residuals
+D = 0.11516, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>El test anterior nos brinda un <span class="math inline">\(valor-p =2.2\times10^{-16} &lt; 0.05\)</span>, por lo que tenemos evidencia suficiente para rechazar la hip?tesis nula, y con una significancia de 0.05, los residuales no tienen un comportamiento normal. Por lo que no se podria recomendar la utilizaci?n del modelo generado.</p>
+</section>
+<section id="varianza-constante-homocedasticidad" class="level3">
+<h3 class="anchored" data-anchor-id="varianza-constante-homocedasticidad">VARIANZA CONSTANTE (Homocedasticidad)</h3>
+<p>Utilizaremos la prueba de Breusch Pagan.</p>
+<p><span class="math display">\[Ho: \text{homocedasticidad}\]</span></p>
+<p><span class="math display">\[ Ha: \text{no homocedasticidad}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    studentized Breusch-Pagan test
+
+data:  modelo1
+BP = 228.87, df = 1, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Con un <span class="math inline">\(valor-p= 2.2\times10^{-16}&lt;0.05\)</span>, existe evidencia de falta de homocedasticidad, por lo que podemos suponer que la varianza de los resiudales no es constante.</p>
+</section>
+</section>
+<section id="independencia-de-los-residuos" class="level2">
+<h2 class="anchored" data-anchor-id="independencia-de-los-residuos">Independencia de los residuos</h2>
+<p>Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelaci?n entre los residuales.</p>
+<p><span class="math display">\[Ho: \text{Los residuos estan autocorrelacionados}\]</span></p>
+<p><span class="math display">\[Ha: \text{No existe autocorrelaci?n en los residuales}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dwtest</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
+
+data:  modelo1
+DW = 2.1364, p-value = 0.9854
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+<p>El <span class="math inline">\(valor-p=9854 &gt;0.05\)</span> indica que los residuales est?n autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes. por lo cual no es recomendado utilizar el modelo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(modelo1<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  modelo1$residuals
+t = 1.9461e-15, df = 1020, p-value = 1
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -3497.157  3497.157
+sample estimates:
+   mean of x 
+3.468283e-12 </code></pre>
+</div>
+</div>
+<p><span class="math display">\[Ho: \mu_{residuales}=0\]</span></p>
+<p><span class="math display">\[Ha: \mu_{residuales}\neq 0\]</span></p>
+<p>Con un <span class="math inline">\(valor-p = 1\)</span> no hay evidencia para rechazar la hipótesis nula, por lo que parece razonable afirmar que la media de los residuales es igual a cero.</p>
+</section>
+<section id="conclusin-general" class="level2">
+<h2 class="anchored" data-anchor-id="conclusin-general">CONCLUSI?N GENERAL</h2>
+<p>El modelo generado es:</p>
+<p><span class="math inline">\(\hat y = 22245.586+3.221x_1\)</span></p>
+<p>donde:</p>
+<p><span class="math display">\[x_1 = \text{area de la casa}\]</span></p>
+<p>aunque no es recomendado utilizarlo por la dependencia de los residuos y falta de normalidad</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">predict</span>(modelo1,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">GrLivArea=</span>test<span class="sc">$</span>GrLivArea))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span><span class="fu">mean</span>(a<span class="sc">-</span>test<span class="sc">$</span>GrLivArea)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>GrLivArea,a,<span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">new=</span><span class="cn">TRUE</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>GrLivArea,test<span class="sc">$</span>SalePrice,<span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>test[<span class="st">'YearsBuilt'</span>] <span class="ot">=</span> <span class="dv">2023</span> <span class="sc">-</span> test<span class="sc">$</span>YearBuilt</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>test[<span class="st">'YearsRem'</span>] <span class="ot">=</span> <span class="dv">2023</span> <span class="sc">-</span> test<span class="sc">$</span>YearRemodAdd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="regresión-lineal-multivariable" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-lineal-multivariable">Regresión lineal multivariable</h3>
+<section id="preprocesamiento-de-datos" class="level4">
+<h4 class="anchored" data-anchor-id="preprocesamiento-de-datos">Preprocesamiento de datos</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1021 obs. of  83 variables:
+ $ Id           : int  415 463 179 526 195 938 1142 1323 1253 1268 ...
+ $ MSSubClass   : int  60 20 20 20 20 60 60 60 20 20 ...
+ $ MSZoning     : chr  "RL" "RL" "RL" "FV" ...
+ $ LotFrontage  : int  59 60 63 62 60 75 NA 107 62 89 ...
+ $ LotArea      : int  11228 8281 17423 7500 7180 9675 10304 10186 9858 13214 ...
+ $ Street       : chr  "Pave" "Pave" "Pave" "Pave" ...
+ $ Alley        : chr  NA NA NA "Pave" ...
+ $ LotShape     : chr  "IR2" "IR1" "IR1" "Reg" ...
+ $ LandContour  : chr  "Lvl" "Lvl" "Lvl" "Lvl" ...
+ $ Utilities    : chr  "AllPub" "AllPub" "AllPub" "AllPub" ...
+ $ LotConfig    : chr  "CulDSac" "Inside" "CulDSac" "Inside" ...
+ $ LandSlope    : chr  "Gtl" "Gtl" "Gtl" "Gtl" ...
+ $ Neighborhood : chr  "SawyerW" "Sawyer" "StoneBr" "Somerst" ...
+ $ Condition1   : chr  "Norm" "Norm" "Norm" "Norm" ...
+ $ Condition2   : chr  "Norm" "Norm" "Norm" "Norm" ...
+ $ BldgType     : chr  "1Fam" "1Fam" "1Fam" "1Fam" ...
+ $ HouseStyle   : chr  "2Story" "1Story" "1Story" "1Story" ...
+ $ OverallQual  : int  7 5 9 7 5 7 5 7 5 9 ...
+ $ OverallCond  : int  5 5 5 5 7 5 7 5 6 5 ...
+ $ YearBuilt    : int  1993 1965 2008 2005 1972 2005 1976 1992 1968 2008 ...
+ $ YearRemodAdd : int  1993 1965 2009 2005 1972 2005 1976 1992 1968 2009 ...
+ $ RoofStyle    : chr  "Gable" "Gable" "Hip" "Gable" ...
+ $ RoofMatl     : chr  "CompShg" "CompShg" "CompShg" "CompShg" ...
+ $ Exterior1st  : chr  "VinylSd" "MetalSd" "VinylSd" "VinylSd" ...
+ $ Exterior2nd  : chr  "VinylSd" "MetalSd" "VinylSd" "VinylSd" ...
+ $ MasVnrType   : chr  "None" "None" "Stone" "None" ...
+ $ MasVnrArea   : int  0 0 748 0 0 0 44 0 0 0 ...
+ $ ExterQual    : chr  "Gd" "TA" "Ex" "Gd" ...
+ $ ExterCond    : chr  "TA" "TA" "TA" "TA" ...
+ $ Foundation   : chr  "PConc" "CBlock" "PConc" "PConc" ...
+ $ BsmtQual     : chr  "Gd" "TA" "Ex" "Gd" ...
+ $ BsmtCond     : chr  "TA" "TA" "TA" "TA" ...
+ $ BsmtExposure : chr  "No" "No" "No" "No" ...
+ $ BsmtFinType1 : chr  "BLQ" "Rec" "GLQ" "Unf" ...
+ $ BsmtFinSF1   : int  50 553 1904 0 390 341 381 674 510 0 ...
+ $ BsmtFinType2 : chr  "GLQ" "BLQ" "Unf" "Unf" ...
+ $ BsmtFinSF2   : int  531 311 0 0 0 0 0 0 0 0 ...
+ $ BsmtUnfSF    : int  499 0 312 1257 474 772 399 76 354 2002 ...
+ $ TotalBsmtSF  : int  1080 864 2216 1257 864 1113 780 750 864 2002 ...
+ $ Heating      : chr  "GasA" "GasA" "GasA" "GasA" ...
+ $ HeatingQC    : chr  "Ex" "Gd" "Ex" "Ex" ...
+ $ CentralAir   : chr  "Y" "Y" "Y" "Y" ...
+ $ Electrical   : chr  "SBrkr" "SBrkr" "SBrkr" "SBrkr" ...
+ $ X1stFlrSF    : int  1080 864 2234 1266 864 1113 1088 1061 874 2018 ...
+ $ X2ndFlrSF    : int  1017 0 0 0 0 858 780 862 0 0 ...
+ $ LowQualFinSF : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ GrLivArea    : int  2097 864 2234 1266 864 1971 1868 1923 874 2018 ...
+ $ BsmtFullBath : int  0 0 1 0 0 0 1 1 1 0 ...
+ $ BsmtHalfBath : int  1 0 0 0 0 0 0 0 0 0 ...
+ $ FullBath     : int  2 1 2 2 1 2 2 2 1 2 ...
+ $ HalfBath     : int  1 0 0 0 0 1 1 1 0 0 ...
+ $ BedroomAbvGr : int  3 3 1 3 3 3 4 3 3 3 ...
+ $ KitchenAbvGr : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ KitchenQual  : chr  "Gd" "TA" "Ex" "Gd" ...
+ $ TotRmsAbvGrd : int  9 5 9 6 5 8 9 8 5 10 ...
+ $ Functional   : chr  "Typ" "Typ" "Typ" "Typ" ...
+ $ Fireplaces   : int  1 1 1 1 0 1 1 1 0 1 ...
+ $ FireplaceQu  : chr  "TA" "Po" "Gd" "TA" ...
+ $ GarageType   : chr  "Attchd" "Detchd" "Attchd" "Attchd" ...
+ $ GarageYrBlt  : int  1993 1965 2009 2005 1989 2005 1976 1992 1968 2009 ...
+ $ GarageFinish : chr  "Unf" "Unf" "Fin" "Unf" ...
+ $ GarageCars   : int  3 1 3 2 1 2 2 2 1 3 ...
+ $ GarageArea   : int  678 360 1166 453 352 689 484 564 288 746 ...
+ $ GarageQual   : chr  "TA" "TA" "TA" "TA" ...
+ $ GarageCond   : chr  "TA" "TA" "TA" "TA" ...
+ $ PavedDrive   : chr  "Y" "Y" "Y" "Y" ...
+ $ WoodDeckSF   : int  196 0 0 38 0 0 448 240 33 144 ...
+ $ OpenPorchSF  : int  187 0 60 144 0 48 96 39 0 76 ...
+ $ EnclosedPorch: int  0 236 0 0 0 0 0 0 0 0 ...
+ $ X3SsnPorch   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ScreenPorch  : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PoolArea     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PoolQC       : chr  NA NA NA NA ...
+ $ Fence        : chr  NA "GdWo" NA NA ...
+ $ MiscFeature  : chr  NA NA NA NA ...
+ $ MiscVal      : int  0 0 0 0 0 0 0 0 600 0 ...
+ $ MoSold       : int  12 12 7 4 5 2 10 6 11 5 ...
+ $ YrSold       : int  2008 2009 2009 2006 2008 2009 2009 2010 2009 2010 ...
+ $ SaleType     : chr  "WD" "WD" "New" "WD" ...
+ $ SaleCondition: chr  "Normal" "Normal" "Partial" "Normal" ...
+ $ SalePrice    : int  228000 62383 501837 176000 127000 253000 197500 190000 130000 378500 ...
+ $ YearsBuilt   : num  30 58 15 18 51 18 47 31 55 15 ...
+ $ YearsRem     : num  30 58 14 18 51 18 47 31 55 14 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>numericasTrain <span class="ot">&lt;-</span> train[, <span class="fu">c</span>(<span class="st">'MSSubClass'</span>, <span class="st">'LotArea'</span>, <span class="st">'OverallQual'</span>, <span class="st">'OverallCond'</span>, <span class="st">'YearsBuilt'</span>, <span class="st">'YearsRem'</span>, <span class="st">'BsmtFinSF1'</span>, <span class="st">'BsmtFinSF2'</span>, <span class="st">'BsmtUnfSF'</span>, <span class="st">'TotalBsmtSF'</span>, <span class="st">'X1stFlrSF'</span>, <span class="st">'X2ndFlrSF'</span>, <span class="st">'LowQualFinSF'</span>, <span class="st">'GrLivArea'</span>, <span class="st">'BsmtFullBath'</span>, <span class="st">'BsmtHalfBath'</span>, <span class="st">'FullBath'</span>, <span class="st">'HalfBath'</span>, <span class="st">'BedroomAbvGr'</span>, <span class="st">'KitchenAbvGr'</span>, <span class="st">'TotRmsAbvGrd'</span>, <span class="st">'Fireplaces'</span>, <span class="st">'GarageCars'</span>, <span class="st">'GarageArea'</span>, <span class="st">'WoodDeckSF'</span>, <span class="st">'OpenPorchSF'</span>, <span class="st">'EnclosedPorch'</span>, <span class="st">'X3SsnPorch'</span>, <span class="st">'ScreenPorch'</span>, <span class="st">'PoolArea'</span>, <span class="st">'MiscVal'</span>, <span class="st">'MoSold'</span>, <span class="st">'SalePrice'</span>)]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>numericasTest <span class="ot">&lt;-</span> test[, <span class="fu">c</span>(<span class="st">'MSSubClass'</span>, <span class="st">'LotArea'</span>, <span class="st">'OverallQual'</span>, <span class="st">'OverallCond'</span>, <span class="st">'YearsBuilt'</span>, <span class="st">'YearsRem'</span>, <span class="st">'BsmtFinSF1'</span>, <span class="st">'BsmtFinSF2'</span>, <span class="st">'BsmtUnfSF'</span>, <span class="st">'TotalBsmtSF'</span>, <span class="st">'X1stFlrSF'</span>, <span class="st">'X2ndFlrSF'</span>, <span class="st">'LowQualFinSF'</span>, <span class="st">'GrLivArea'</span>, <span class="st">'BsmtFullBath'</span>, <span class="st">'BsmtHalfBath'</span>, <span class="st">'FullBath'</span>, <span class="st">'HalfBath'</span>, <span class="st">'BedroomAbvGr'</span>, <span class="st">'KitchenAbvGr'</span>, <span class="st">'TotRmsAbvGrd'</span>, <span class="st">'Fireplaces'</span>, <span class="st">'GarageCars'</span>, <span class="st">'GarageArea'</span>, <span class="st">'WoodDeckSF'</span>, <span class="st">'OpenPorchSF'</span>, <span class="st">'EnclosedPorch'</span>, <span class="st">'X3SsnPorch'</span>, <span class="st">'ScreenPorch'</span>, <span class="st">'PoolArea'</span>, <span class="st">'MiscVal'</span>, <span class="st">'MoSold'</span>, <span class="st">'SalePrice'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="correlación-de-las-variables" class="level4">
+<h4 class="anchored" data-anchor-id="correlación-de-las-variables">Correlación de las variables</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>matriz_cor <span class="ot">=</span> <span class="fu">cor</span>(numericasTrain, <span class="at">method =</span> <span class="st">'spearman'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(matriz_cor, <span class="at">type =</span> <span class="st">'upper'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/correlacion-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>newNumericasTrain <span class="ot">&lt;-</span> train[, <span class="fu">c</span>(<span class="st">'MSSubClass'</span>, <span class="st">'LotArea'</span>, <span class="st">'OverallQual'</span>, <span class="st">'OverallCond'</span>, <span class="st">'BsmtFinSF1'</span>, <span class="st">'BsmtFinSF2'</span>, <span class="st">'TotalBsmtSF'</span>, <span class="st">'LowQualFinSF'</span>, <span class="st">'BsmtHalfBath'</span>, <span class="st">'HalfBath'</span>, <span class="st">'KitchenAbvGr'</span>, <span class="st">'TotRmsAbvGrd'</span>, <span class="st">'Fireplaces'</span>, <span class="st">'WoodDeckSF'</span>, <span class="st">'OpenPorchSF'</span>, <span class="st">'EnclosedPorch'</span>, <span class="st">'X3SsnPorch'</span>, <span class="st">'ScreenPorch'</span>, <span class="st">'PoolArea'</span>, <span class="st">'MiscVal'</span>, <span class="st">'MoSold'</span>, <span class="st">'SalePrice'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dada la correlación entre las variables evidenciada en la gráfica, es necesario prescindir de las variables YearsBuilt, YearsRem, GrLivArea, FullBath, GarageCars, GarageArea, BsmtUnfSF, BsmtFullBath, X1stFlrSF, X2ndFlrSF, BedroomAbvGr.</p>
+</section>
+<section id="generando-el-modelo" class="level4">
+<h4 class="anchored" data-anchor-id="generando-el-modelo">Generando el modelo</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mdLnlMtv <span class="ot">&lt;-</span> <span class="fu">lm</span>(SalePrice<span class="sc">~</span>., <span class="at">data =</span> newNumericasTrain)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdLnlMtv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ ., data = newNumericasTrain)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-458568  -20186   -1555   13950  335149 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -1.008e+05  1.271e+04  -7.931 5.80e-15 ***
+MSSubClass    -1.110e+02  3.465e+01  -3.203  0.00140 ** 
+LotArea        3.659e-01  1.584e-01   2.311  0.02105 *  
+OverallQual    3.035e+04  1.366e+03  22.219  &lt; 2e-16 ***
+OverallCond    3.752e+02  1.226e+03   0.306  0.75976    
+BsmtFinSF1     2.278e+01  3.443e+00   6.616 6.01e-11 ***
+BsmtFinSF2     5.126e+00  8.226e+00   0.623  0.53338    
+TotalBsmtSF    1.948e+01  4.623e+00   4.215 2.73e-05 ***
+LowQualFinSF  -2.024e+01  2.564e+01  -0.790  0.42991    
+BsmtHalfBath   1.623e+02  5.861e+03   0.028  0.97792    
+HalfBath       5.261e+03  2.971e+03   1.771  0.07689 .  
+KitchenAbvGr  -1.534e+04  6.905e+03  -2.221  0.02659 *  
+TotRmsAbvGrd   1.095e+04  1.073e+03  10.207  &lt; 2e-16 ***
+Fireplaces     6.868e+03  2.359e+03   2.911  0.00368 ** 
+WoodDeckSF     5.234e+01  1.115e+01   4.694 3.05e-06 ***
+OpenPorchSF    1.802e+01  2.069e+01   0.871  0.38390    
+EnclosedPorch -3.823e+01  2.229e+01  -1.715  0.08665 .  
+X3SsnPorch     5.783e+01  3.986e+01   1.451  0.14713    
+ScreenPorch    3.043e+01  2.402e+01   1.267  0.20555    
+PoolArea      -1.743e+01  3.647e+01  -0.478  0.63280    
+MiscVal       -7.293e-01  2.451e+00  -0.298  0.76613    
+MoSold        -2.834e+02  4.797e+02  -0.591  0.55474    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 40610 on 999 degrees of freedom
+Multiple R-squared:  0.7448,    Adjusted R-squared:  0.7394 
+F-statistic: 138.8 on 21 and 999 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(mdLnlMtv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=21691.1
+SalePrice ~ MSSubClass + LotArea + OverallQual + OverallCond + 
+    BsmtFinSF1 + BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + BsmtHalfBath + 
+    HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + 
+    OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch + 
+    PoolArea + MiscVal + MoSold
+
+                Df  Sum of Sq        RSS   AIC
+- BsmtHalfBath   1 1.2639e+06 1.6477e+12 21689
+- MiscVal        1 1.4600e+08 1.6478e+12 21689
+- OverallCond    1 1.5432e+08 1.6479e+12 21689
+- PoolArea       1 3.7676e+08 1.6481e+12 21689
+- MoSold         1 5.7584e+08 1.6483e+12 21690
+- BsmtFinSF2     1 6.4032e+08 1.6483e+12 21690
+- LowQualFinSF   1 1.0285e+09 1.6487e+12 21690
+- OpenPorchSF    1 1.2516e+09 1.6489e+12 21690
+- ScreenPorch    1 2.6465e+09 1.6503e+12 21691
+&lt;none&gt;                        1.6477e+12 21691
+- X3SsnPorch     1 3.4720e+09 1.6512e+12 21691
+- EnclosedPorch  1 4.8514e+09 1.6525e+12 21692
+- HalfBath       1 5.1723e+09 1.6529e+12 21692
+- KitchenAbvGr   1 8.1348e+09 1.6558e+12 21694
+- LotArea        1 8.8069e+09 1.6565e+12 21695
+- Fireplaces     1 1.3977e+10 1.6617e+12 21698
+- MSSubClass     1 1.6925e+10 1.6646e+12 21700
+- TotalBsmtSF    1 2.9296e+10 1.6770e+12 21707
+- WoodDeckSF     1 3.6345e+10 1.6840e+12 21711
+- BsmtFinSF1     1 7.2195e+10 1.7199e+12 21733
+- TotRmsAbvGrd   1 1.7182e+11 1.8195e+12 21790
+- OverallQual    1 8.1426e+11 2.4620e+12 22099
+
+Step:  AIC=21689.1
+SalePrice ~ MSSubClass + LotArea + OverallQual + OverallCond + 
+    BsmtFinSF1 + BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + 
+    KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + 
+    EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + MiscVal + 
+    MoSold
+
+                Df  Sum of Sq        RSS   AIC
+- MiscVal        1 1.4654e+08 1.6478e+12 21687
+- OverallCond    1 1.6178e+08 1.6479e+12 21687
+- PoolArea       1 3.7849e+08 1.6481e+12 21687
+- MoSold         1 5.7465e+08 1.6483e+12 21688
+- BsmtFinSF2     1 6.4945e+08 1.6483e+12 21688
+- LowQualFinSF   1 1.0315e+09 1.6487e+12 21688
+- OpenPorchSF    1 1.2522e+09 1.6490e+12 21688
+- ScreenPorch    1 2.6460e+09 1.6503e+12 21689
+&lt;none&gt;                        1.6477e+12 21689
+- X3SsnPorch     1 3.4878e+09 1.6512e+12 21689
+- EnclosedPorch  1 4.8725e+09 1.6526e+12 21690
+- HalfBath       1 5.1740e+09 1.6529e+12 21690
+- KitchenAbvGr   1 8.1349e+09 1.6558e+12 21692
+- LotArea        1 8.8586e+09 1.6566e+12 21693
+- Fireplaces     1 1.3984e+10 1.6617e+12 21696
+- MSSubClass     1 1.6929e+10 1.6646e+12 21698
+- TotalBsmtSF    1 2.9295e+10 1.6770e+12 21705
+- WoodDeckSF     1 3.6376e+10 1.6841e+12 21709
+- BsmtFinSF1     1 7.2301e+10 1.7200e+12 21731
+- TotRmsAbvGrd   1 1.7182e+11 1.8195e+12 21788
+- OverallQual    1 8.1587e+11 2.4636e+12 22098
+
+Step:  AIC=21687.19
+SalePrice ~ MSSubClass + LotArea + OverallQual + OverallCond + 
+    BsmtFinSF1 + BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + 
+    KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + 
+    EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + MoSold
+
+                Df  Sum of Sq        RSS   AIC
+- OverallCond    1 1.4200e+08 1.6480e+12 21685
+- PoolArea       1 4.0372e+08 1.6482e+12 21685
+- MoSold         1 5.6458e+08 1.6484e+12 21686
+- BsmtFinSF2     1 6.5359e+08 1.6485e+12 21686
+- LowQualFinSF   1 1.0267e+09 1.6489e+12 21686
+- OpenPorchSF    1 1.2616e+09 1.6491e+12 21686
+- ScreenPorch    1 2.5911e+09 1.6504e+12 21687
+&lt;none&gt;                        1.6478e+12 21687
+- X3SsnPorch     1 3.4822e+09 1.6513e+12 21687
+- EnclosedPorch  1 4.8479e+09 1.6527e+12 21688
+- HalfBath       1 5.2279e+09 1.6531e+12 21688
+- KitchenAbvGr   1 8.2233e+09 1.6561e+12 21690
+- LotArea        1 8.7617e+09 1.6566e+12 21691
+- Fireplaces     1 1.4035e+10 1.6619e+12 21694
+- MSSubClass     1 1.6858e+10 1.6647e+12 21696
+- TotalBsmtSF    1 2.9523e+10 1.6774e+12 21703
+- WoodDeckSF     1 3.6442e+10 1.6843e+12 21708
+- BsmtFinSF1     1 7.2210e+10 1.7201e+12 21729
+- TotRmsAbvGrd   1 1.7209e+11 1.8199e+12 21787
+- OverallQual    1 8.1582e+11 2.4637e+12 22096
+
+Step:  AIC=21685.28
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+    TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+    X3SsnPorch + ScreenPorch + PoolArea + MoSold
+
+                Df  Sum of Sq        RSS   AIC
+- PoolArea       1 3.9435e+08 1.6484e+12 21684
+- MoSold         1 5.7454e+08 1.6486e+12 21684
+- BsmtFinSF2     1 6.7581e+08 1.6487e+12 21684
+- LowQualFinSF   1 1.0151e+09 1.6490e+12 21684
+- OpenPorchSF    1 1.3008e+09 1.6493e+12 21684
+- ScreenPorch    1 2.7051e+09 1.6507e+12 21685
+&lt;none&gt;                        1.6480e+12 21685
+- X3SsnPorch     1 3.4991e+09 1.6515e+12 21685
+- EnclosedPorch  1 4.7788e+09 1.6528e+12 21686
+- HalfBath       1 5.1103e+09 1.6531e+12 21686
+- KitchenAbvGr   1 8.4578e+09 1.6564e+12 21689
+- LotArea        1 8.8299e+09 1.6568e+12 21689
+- Fireplaces     1 1.4034e+10 1.6620e+12 21692
+- MSSubClass     1 1.7149e+10 1.6651e+12 21694
+- TotalBsmtSF    1 2.9821e+10 1.6778e+12 21702
+- WoodDeckSF     1 3.6646e+10 1.6846e+12 21706
+- BsmtFinSF1     1 7.3128e+10 1.7211e+12 21728
+- TotRmsAbvGrd   1 1.7248e+11 1.8205e+12 21785
+- OverallQual    1 8.1655e+11 2.4645e+12 22094
+
+Step:  AIC=21683.53
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+    TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+    X3SsnPorch + ScreenPorch + MoSold
+
+                Df  Sum of Sq        RSS   AIC
+- MoSold         1 5.7230e+08 1.6490e+12 21682
+- BsmtFinSF2     1 6.7203e+08 1.6491e+12 21682
+- LowQualFinSF   1 9.9271e+08 1.6494e+12 21682
+- OpenPorchSF    1 1.2146e+09 1.6496e+12 21682
+- ScreenPorch    1 2.5721e+09 1.6510e+12 21683
+&lt;none&gt;                        1.6484e+12 21684
+- X3SsnPorch     1 3.5117e+09 1.6519e+12 21684
+- EnclosedPorch  1 4.8164e+09 1.6532e+12 21685
+- HalfBath       1 5.1397e+09 1.6535e+12 21685
+- KitchenAbvGr   1 8.3099e+09 1.6567e+12 21687
+- LotArea        1 8.7184e+09 1.6571e+12 21687
+- Fireplaces     1 1.4045e+10 1.6624e+12 21690
+- MSSubClass     1 1.7550e+10 1.6659e+12 21692
+- TotalBsmtSF    1 2.9484e+10 1.6779e+12 21700
+- WoodDeckSF     1 3.6453e+10 1.6848e+12 21704
+- BsmtFinSF1     1 7.2792e+10 1.7212e+12 21726
+- TotRmsAbvGrd   1 1.7252e+11 1.8209e+12 21783
+- OverallQual    1 8.2312e+11 2.4715e+12 22095
+
+Step:  AIC=21681.88
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+    TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+    X3SsnPorch + ScreenPorch
+
+                Df  Sum of Sq        RSS   AIC
+- BsmtFinSF2     1 6.5165e+08 1.6496e+12 21680
+- LowQualFinSF   1 9.6225e+08 1.6499e+12 21681
+- OpenPorchSF    1 1.1370e+09 1.6501e+12 21681
+- ScreenPorch    1 2.5199e+09 1.6515e+12 21681
+&lt;none&gt;                        1.6490e+12 21682
+- X3SsnPorch     1 3.4301e+09 1.6524e+12 21682
+- EnclosedPorch  1 4.7753e+09 1.6537e+12 21683
+- HalfBath       1 5.4523e+09 1.6544e+12 21683
+- KitchenAbvGr   1 8.5547e+09 1.6575e+12 21685
+- LotArea        1 8.8265e+09 1.6578e+12 21685
+- Fireplaces     1 1.3870e+10 1.6628e+12 21688
+- MSSubClass     1 1.7465e+10 1.6664e+12 21691
+- TotalBsmtSF    1 3.0223e+10 1.6792e+12 21698
+- WoodDeckSF     1 3.6456e+10 1.6854e+12 21702
+- BsmtFinSF1     1 7.2897e+10 1.7219e+12 21724
+- TotRmsAbvGrd   1 1.7231e+11 1.8213e+12 21781
+- OverallQual    1 8.2531e+11 2.4743e+12 22094
+
+Step:  AIC=21680.28
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + 
+    Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + 
+    ScreenPorch
+
+                Df  Sum of Sq        RSS   AIC
+- LowQualFinSF   1 9.5444e+08 1.6506e+12 21679
+- OpenPorchSF    1 1.1946e+09 1.6508e+12 21679
+- ScreenPorch    1 2.9151e+09 1.6525e+12 21680
+&lt;none&gt;                        1.6496e+12 21680
+- X3SsnPorch     1 3.3538e+09 1.6530e+12 21680
+- EnclosedPorch  1 4.6113e+09 1.6542e+12 21681
+- HalfBath       1 5.5690e+09 1.6552e+12 21682
+- LotArea        1 8.8539e+09 1.6585e+12 21684
+- KitchenAbvGr   1 8.8609e+09 1.6585e+12 21684
+- Fireplaces     1 1.4199e+10 1.6638e+12 21687
+- MSSubClass     1 1.7280e+10 1.6669e+12 21689
+- TotalBsmtSF    1 3.3017e+10 1.6826e+12 21699
+- WoodDeckSF     1 3.7267e+10 1.6869e+12 21701
+- BsmtFinSF1     1 7.2667e+10 1.7223e+12 21722
+- TotRmsAbvGrd   1 1.7177e+11 1.8214e+12 21779
+- OverallQual    1 8.4073e+11 2.4903e+12 22099
+
+Step:  AIC=21678.87
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + 
+    WoodDeckSF + OpenPorchSF + EnclosedPorch + X3SsnPorch + ScreenPorch
+
+                Df  Sum of Sq        RSS   AIC
+- OpenPorchSF    1 1.1667e+09 1.6517e+12 21678
+- ScreenPorch    1 2.7660e+09 1.6533e+12 21679
+&lt;none&gt;                        1.6506e+12 21679
+- X3SsnPorch     1 3.3568e+09 1.6539e+12 21679
+- EnclosedPorch  1 4.6367e+09 1.6552e+12 21680
+- HalfBath       1 6.0846e+09 1.6566e+12 21681
+- KitchenAbvGr   1 8.2968e+09 1.6589e+12 21682
+- LotArea        1 8.9167e+09 1.6595e+12 21682
+- Fireplaces     1 1.4577e+10 1.6651e+12 21686
+- MSSubClass     1 1.7858e+10 1.6684e+12 21688
+- TotalBsmtSF    1 3.2953e+10 1.6835e+12 21697
+- WoodDeckSF     1 3.7463e+10 1.6880e+12 21700
+- BsmtFinSF1     1 7.3694e+10 1.7243e+12 21722
+- TotRmsAbvGrd   1 1.7282e+11 1.8234e+12 21779
+- OverallQual    1 8.5163e+11 2.5022e+12 22102
+
+Step:  AIC=21677.6
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + 
+    WoodDeckSF + EnclosedPorch + X3SsnPorch + ScreenPorch
+
+                Df  Sum of Sq        RSS   AIC
+- ScreenPorch    1 2.8722e+09 1.6546e+12 21677
+&lt;none&gt;                        1.6517e+12 21678
+- X3SsnPorch     1 3.2558e+09 1.6550e+12 21678
+- EnclosedPorch  1 4.9709e+09 1.6567e+12 21679
+- HalfBath       1 6.6963e+09 1.6584e+12 21680
+- KitchenAbvGr   1 8.9681e+09 1.6607e+12 21681
+- LotArea        1 9.2269e+09 1.6610e+12 21681
+- Fireplaces     1 1.4492e+10 1.6662e+12 21685
+- MSSubClass     1 1.7361e+10 1.6691e+12 21686
+- TotalBsmtSF    1 3.5153e+10 1.6869e+12 21697
+- WoodDeckSF     1 3.6689e+10 1.6884e+12 21698
+- BsmtFinSF1     1 7.3239e+10 1.7250e+12 21720
+- TotRmsAbvGrd   1 1.7791e+11 1.8296e+12 21780
+- OverallQual    1 8.6640e+11 2.5181e+12 22106
+
+Step:  AIC=21677.37
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + 
+    WoodDeckSF + EnclosedPorch + X3SsnPorch
+
+                Df  Sum of Sq        RSS   AIC
+- X3SsnPorch     1 2.9861e+09 1.6576e+12 21677
+&lt;none&gt;                        1.6546e+12 21677
+- EnclosedPorch  1 5.7783e+09 1.6604e+12 21679
+- HalfBath       1 7.0267e+09 1.6616e+12 21680
+- LotArea        1 9.1850e+09 1.6638e+12 21681
+- KitchenAbvGr   1 9.5493e+09 1.6641e+12 21681
+- MSSubClass     1 1.7429e+10 1.6720e+12 21686
+- Fireplaces     1 1.7774e+10 1.6724e+12 21686
+- WoodDeckSF     1 3.4414e+10 1.6890e+12 21696
+- TotalBsmtSF    1 3.6810e+10 1.6914e+12 21698
+- BsmtFinSF1     1 7.2059e+10 1.7267e+12 21719
+- TotRmsAbvGrd   1 1.7980e+11 1.8344e+12 21781
+- OverallQual    1 8.6368e+11 2.5183e+12 22104
+
+Step:  AIC=21677.21
+SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + 
+    WoodDeckSF + EnclosedPorch
+
+                Df  Sum of Sq        RSS   AIC
+&lt;none&gt;                        1.6576e+12 21677
+- EnclosedPorch  1 6.0374e+09 1.6636e+12 21679
+- HalfBath       1 7.2355e+09 1.6648e+12 21680
+- LotArea        1 9.3796e+09 1.6670e+12 21681
+- KitchenAbvGr   1 9.5341e+09 1.6671e+12 21681
+- Fireplaces     1 1.7672e+10 1.6753e+12 21686
+- MSSubClass     1 1.7845e+10 1.6754e+12 21686
+- WoodDeckSF     1 3.3407e+10 1.6910e+12 21696
+- TotalBsmtSF    1 3.7322e+10 1.6949e+12 21698
+- BsmtFinSF1     1 7.2410e+10 1.7300e+12 21719
+- TotRmsAbvGrd   1 1.7820e+11 1.8358e+12 21780
+- OverallQual    1 8.6788e+11 2.5255e+12 22105</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ MSSubClass + LotArea + OverallQual + 
+    BsmtFinSF1 + TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + 
+    Fireplaces + WoodDeckSF + EnclosedPorch, data = newNumericasTrain)
+
+Coefficients:
+  (Intercept)     MSSubClass        LotArea    OverallQual     BsmtFinSF1  
+   -9.848e+04     -1.129e+02      3.754e-01      3.031e+04      2.222e+01  
+  TotalBsmtSF       HalfBath   KitchenAbvGr   TotRmsAbvGrd     Fireplaces  
+    2.086e+01      6.102e+03     -1.626e+04      1.082e+04      7.552e+03  
+   WoodDeckSF  EnclosedPorch  
+    4.919e+01     -4.216e+01  </code></pre>
+</div>
+</div>
+<p>De la función anterior tenemos que el mejor modelo es el de la forma</p>
+<pre><code>SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+    TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+    X3SsnPorch + ScreenPorch + PoolArea + MoSold</code></pre>
+<p>Por lo tanto. Consideremos ese modelo de ahora en adelante</p>
+</section>
+<section id="generando-el-mejor-modelo" class="level4">
+<h4 class="anchored" data-anchor-id="generando-el-mejor-modelo">Generando el mejor modelo</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mejorModelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(SalePrice <span class="sc">~</span> MSSubClass <span class="sc">+</span> LotArea <span class="sc">+</span> OverallQual <span class="sc">+</span> BsmtFinSF1 <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    BsmtFinSF2 <span class="sc">+</span> TotalBsmtSF <span class="sc">+</span> LowQualFinSF <span class="sc">+</span> HalfBath <span class="sc">+</span> KitchenAbvGr <span class="sc">+</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    TotRmsAbvGrd <span class="sc">+</span> Fireplaces <span class="sc">+</span> WoodDeckSF <span class="sc">+</span> OpenPorchSF <span class="sc">+</span> EnclosedPorch <span class="sc">+</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    X3SsnPorch <span class="sc">+</span> ScreenPorch <span class="sc">+</span> PoolArea <span class="sc">+</span> MoSold, <span class="at">data =</span> newNumericasTrain)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mejorModelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ MSSubClass + LotArea + OverallQual + 
+    BsmtFinSF1 + BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + 
+    KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + 
+    EnclosedPorch + X3SsnPorch + ScreenPorch + PoolArea + MoSold, 
+    data = newNumericasTrain)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-457990  -20230   -1715   13817  335308 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -9.841e+04  9.942e+03  -9.899  &lt; 2e-16 ***
+MSSubClass    -1.114e+02  3.450e+01  -3.229  0.00128 ** 
+LotArea        3.649e-01  1.575e-01   2.317  0.02070 *  
+OverallQual    3.034e+04  1.362e+03  22.282  &lt; 2e-16 ***
+BsmtFinSF1     2.284e+01  3.425e+00   6.668 4.28e-11 ***
+BsmtFinSF2     5.245e+00  8.182e+00   0.641  0.52166    
+TotalBsmtSF    1.928e+01  4.529e+00   4.258 2.26e-05 ***
+LowQualFinSF  -2.010e+01  2.558e+01  -0.786  0.43228    
+HalfBath       5.203e+03  2.952e+03   1.763  0.07826 .  
+KitchenAbvGr  -1.557e+04  6.868e+03  -2.268  0.02356 *  
+TotRmsAbvGrd   1.096e+04  1.071e+03  10.241  &lt; 2e-16 ***
+Fireplaces     6.880e+03  2.355e+03   2.921  0.00357 ** 
+WoodDeckSF     5.250e+01  1.112e+01   4.720 2.69e-06 ***
+OpenPorchSF    1.835e+01  2.064e+01   0.889  0.37404    
+EnclosedPorch -3.784e+01  2.220e+01  -1.705  0.08858 .  
+X3SsnPorch     5.797e+01  3.975e+01   1.459  0.14499    
+ScreenPorch    3.063e+01  2.388e+01   1.282  0.19997    
+PoolArea      -1.780e+01  3.635e+01  -0.490  0.62448    
+MoSold        -2.829e+02  4.786e+02  -0.591  0.55463    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 40550 on 1002 degrees of freedom
+Multiple R-squared:  0.7448,    Adjusted R-squared:  0.7402 
+F-statistic: 162.4 on 18 and 1002 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-del-modelo-1" class="level4">
+<h4 class="anchored" data-anchor-id="validación-del-modelo-1">Validación del modelo</h4>
+<section id="significancia-global-1" class="level5">
+<h5 class="anchored" data-anchor-id="significancia-global-1">Significancia Global</h5>
+<p>[ H_0: _1 = _2 = … = _n = 0 ]</p>
+<p>[ H_1: ]</p>
+<p>Dado que $ &lt; 2 ^{-16} &lt; 0.05 H_0 $ se rechaza, por lo cual es razonable afirmar que el modelo tiene significancia global.</p>
+</section>
+<section id="significancia-individual" class="level5">
+<h5 class="anchored" data-anchor-id="significancia-individual">Significancia individual</h5>
+<p>De la tabla anterior tenemos que, con un nivel de significancia de 5%, las variables BsmtFinSF2, LowQualFinSF, OpenPorchSF, X3SsnPorch, ScreenPorch, PoolArea, MoSold no poseen significancia individual. Por lo tanto, procedamos a crear un modelo sin estas variables.</p>
+</section>
+<section id="nuevo-modelo" class="level5">
+<h5 class="anchored" data-anchor-id="nuevo-modelo">Nuevo modelo</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mdLnMtvS <span class="ot">&lt;-</span> <span class="fu">lm</span>(SalePrice <span class="sc">~</span> MSSubClass <span class="sc">+</span> LotArea <span class="sc">+</span> OverallQual <span class="sc">+</span> BsmtFinSF1 <span class="sc">+</span> TotalBsmtSF <span class="sc">+</span> HalfBath <span class="sc">+</span> KitchenAbvGr <span class="sc">+</span> TotRmsAbvGrd <span class="sc">+</span> Fireplaces <span class="sc">+</span> WoodDeckSF <span class="sc">+</span> EnclosedPorch, <span class="at">data =</span> newNumericasTrain)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mdLnMtvS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = SalePrice ~ MSSubClass + LotArea + OverallQual + 
+    BsmtFinSF1 + TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + 
+    Fireplaces + WoodDeckSF + EnclosedPorch, data = newNumericasTrain)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-467585  -19813   -1391   14025  333788 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -9.848e+04  9.487e+03 -10.381  &lt; 2e-16 ***
+MSSubClass    -1.129e+02  3.425e+01  -3.296  0.00102 ** 
+LotArea        3.754e-01  1.571e-01   2.389  0.01706 *  
+OverallQual    3.031e+04  1.319e+03  22.985  &lt; 2e-16 ***
+BsmtFinSF1     2.222e+01  3.347e+00   6.639 5.15e-11 ***
+TotalBsmtSF    2.086e+01  4.376e+00   4.766 2.15e-06 ***
+HalfBath       6.102e+03  2.908e+03   2.099  0.03610 *  
+KitchenAbvGr  -1.626e+04  6.748e+03  -2.409  0.01617 *  
+TotRmsAbvGrd   1.082e+04  1.039e+03  10.415  &lt; 2e-16 ***
+Fireplaces     7.552e+03  2.302e+03   3.280  0.00107 ** 
+WoodDeckSF     4.919e+01  1.091e+01   4.509 7.26e-06 ***
+EnclosedPorch -4.216e+01  2.199e+01  -1.917  0.05552 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 40530 on 1009 degrees of freedom
+Multiple R-squared:  0.7433,    Adjusted R-squared:  0.7405 
+F-statistic: 265.6 on 11 and 1009 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-de-residuales-1" class="level5">
+<h5 class="anchored" data-anchor-id="análisis-de-residuales-1">Análisis de residuales</h5>
+<section id="normalidad" class="level6">
+<h6 class="anchored" data-anchor-id="normalidad">Normalidad</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(mdLnMtvS<span class="sc">$</span>residuals)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(mdLnMtvS<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/normalidad-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Es discutible el hablar de normalidad utilizando la gráfica anterior, pues en los datos del centro pareciera existir, pero los puntos de los extremos se alejan demasiado de la línea de los 45°. Por lo que se realizará una prueba de Lilliefors para determinar si existe dicha normalidad</p>
+<p><span class="math display">\[ H_0: \text{Normalidad en los residuales} \]</span> <span class="math display">\[ H_1: \text{No hay normalidad en los residuales} \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lillie.test</span>(mdLnMtvS<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Lilliefors (Kolmogorov-Smirnov) normality test
+
+data:  mdLnMtvS$residuals
+D = 0.1206, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>El test anterior nos brinda un $ = 2.2 ^{-16} &lt; = 0.05 H_0 $ debe ser rechazada y, por lo tanto, no existe evidencia suficiente para afirmar que los residuales se comportan de forma normal.</p>
+</section>
+<section id="homocedasticidad" class="level6">
+<h6 class="anchored" data-anchor-id="homocedasticidad">Homocedasticidad</h6>
+<p>Utilizaremos la prueba de Breusch Pagan. <span class="math display">\[ H_0: \text{Homocedasticidad} \]</span> <span class="math display">\[ H_1: \text{No homocedasticidad} \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(mdLnMtvS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    studentized Breusch-Pagan test
+
+data:  mdLnMtvS
+BP = 285.35, df = 11, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>El test anterior devuelve un $ = 2.2 ^{-16} &lt; H_0 $ debe ser rechazada, por lo que no existe evidencia para afirmar homocedasticidad.</p>
+</section>
+<section id="independencia" class="level6">
+<h6 class="anchored" data-anchor-id="independencia">Independencia</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mdLnMtvS<span class="sc">$</span>fitted.values, mdLnMtvS<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/independenciaGrafica-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En la gráfica se puede observar que los residuales siguen un patrón bien definido, lo cual es un claro indicador de la ausencia de independencia.</p>
+</section>
+<section id="independencia-de-los-residuales" class="level6">
+<h6 class="anchored" data-anchor-id="independencia-de-los-residuales">Independencia de los residuales</h6>
+<p>Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelación entre los residuales.</p>
+<p><span class="math display">\[ H_0:  \text{Los residuales estan autocorrelacionados}\]</span> <span class="math display">\[ H_1: \text{No existe autocorrelación en los residuales}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dwtest</span>(mdLnMtvS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
+
+data:  mdLnMtvS
+DW = 2.0776, p-value = 0.8921
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+<p>El test anterior devuelve un <span class="math inline">\(valor-p = 0.8921 &gt; \alpha = 0.05 \implies H_0\)</span> no puede ser rechazada, esto indica que los residuales están autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes.</p>
+</section>
+<section id="valor-esperado-igual-a-0" class="level6">
+<h6 class="anchored" data-anchor-id="valor-esperado-igual-a-0">Valor esperado igual a 0</h6>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mdLnMtvS<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  mdLnMtvS$residuals
+t = -3.8329e-16, df = 1020, p-value = 1
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -2475.647  2475.647
+sample estimates:
+    mean of x 
+-4.835588e-13 </code></pre>
+</div>
+</div>
+<p><span class="math display">\[ H_0: \mu_{residuales} = 0 \]</span> <span class="math display">\[ H_1: \mu_{residuales} \neq 0 \]</span></p>
+<p>Con un <span class="math inline">\(valor-p = 1 &gt; \alpha = 0.05 \implies H_0\)</span> no puede ser rechazada, por lo que es posible afirmar que la media de los residuales es igual a 0</p>
+</section>
+<section id="conclusión" class="level6">
+<h6 class="anchored" data-anchor-id="conclusión">Conclusión</h6>
+<p>Debido a que el modelo no cumple con los supuestos, no se recomienda su uso para predecir el precio de las casas en Ames y Iowa.</p>
+</section>
+</section>
+<section id="predicción" class="level5">
+<h5 class="anchored" data-anchor-id="predicción">Predicción</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>prediccion <span class="ot">&lt;-</span> <span class="fu">predict</span>(mdLnMtvS, <span class="at">newdata =</span> test)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((prediccion <span class="sc">-</span> test<span class="sc">$</span>SalePrice)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1303358790</code></pre>
+</div>
+</div>
+<p>Podemos ver que el error medio cuadrado es de 1303358790, lo cual confirma la conclusión anterior que el modelo no es adecuado para la predicción del precio de las casas.</p>
+</section>
+</section>
+</section>
+<section id="comparación-de-los-modelos-generados" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-los-modelos-generados">Comparación de los modelos generados</h3>
+<p>Veamos que tenemos el modelo generado por una sola variable, el modelo generado por todas las variables y el mejor modelo encontrado, utilizando solo algunas de las variables. A continuación podemos ver las gráficas de los tres modelos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>pricesTest <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"test.csv"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(modelo1, <span class="at">newdata =</span> pricesTest), <span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">new=</span><span class="cn">TRUE</span>)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(mdLnlMtv, <span class="at">newdata =</span> pricesTest), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">new=</span><span class="cn">TRUE</span>)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(mdLnMtvS, <span class="at">newdata =</span> pricesTest), <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HT3_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Dado que los modelos 2 y 3 son multivariables, es imposible graficarlos en dos dimensiones, por lo que nos guiamos más que todo por los resultados obtenidos en las pruebas. Podemos ver claramente que el modelo 1 (verde) es el peor, el que solo utiliza una variable. Esto es debido a que los supuestos no se cumplen, y los datos se ajustan en menos del <span class="math inline">\(50\%\)</span> de los datos. Por otro lado tenemos el modelo utilizando todas las variables (rojo), el cual tampoco es fectivo, prinicpalmente porque muchas variables muestran correlación entre sí, así como el mejor modelo (azul), el cual vemos que es muy similar al anterior. Ambos se ajustan a los datos reales en un <span class="math inline">\(74\%\)</span>. De cualqueir manera, no se recomienda la utilización de ninguno de estos modelos para la predicción del precio de las casas</p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
