@@ -9,6 +9,7 @@ editor: visual
 
 ```{r include=FALSE}
 
+library(psych)
 library(dplyr)
 library(ggplot2)
 library(reshape2)
@@ -258,6 +259,9 @@ set.seed(123)
 p <- 0.7
 corte <- sample(nrow(pricesTrain), nrow(pricesTrain) * p)
 train <- pricesTrain[corte,]
+train['YearsBuilt'] = 2023 - train$YearBuilt
+train['YearsRem'] = 2023 - train$YearRemodAdd
+
 test <- pricesTrain[-corte,]
 <<<<<<< Updated upstream
 
