@@ -5,22 +5,23 @@ format: html
 editor: visual
 ---
 
-## Hoja de trabajo 3
+# Hoja de trabajo 3
 
 ```{r include=FALSE}
 
-library(corrplot)
 library(dplyr)
 library(ggplot2)
 library(reshape2)
 library(psych)
 library(corrplot)
 library(RColorBrewer)
+library(nortest)
+library(lmtest)
 
 pricesTrain <- read.csv("train.csv")
 ```
 
-### Análisis Exploratorio
+## Análisis Exploratorio
 
 ```{r}
 
@@ -30,7 +31,7 @@ ncol(pricesTrain)
 str(pricesTrain)
 ```
 
-#### Variables Categóricas:
+### Variables Categóricas:
 
 -   Id
 
@@ -126,7 +127,7 @@ str(pricesTrain)
 
 -   SaleCondition
 
-#### Variables Cuantitativas
+### Variables Cuantitativas
 
 -   LotFrontage
 
@@ -196,11 +197,11 @@ str(pricesTrain)
 
 -   YrSold
 
-#### Eliminación de variables
+### Eliminación de variables
 
 A continuación se eliminarán las variables que se consideran innecesarias para el modelo
 
-##### Gráfica de correlación de las variables
+#### Gráfica de correlación de las variables
 
 ```{r}
 # Graficar cada variable
@@ -228,7 +229,7 @@ corrplot(mcor,method = 'shade',tl.cex = 1,
 
 De este modo podemos ver que las variables BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal no tienen nigún tipo de correlación y podrían afectar de manera negativa en el modelo, de modo que se eliminarán así como la mayoría de variables cualitativas. En total se eliminarán las siguientes variables : *Id, MSSubClass, Street, Alley, LotShape, LandContour, LotConfig, LandSlope, Neighborhood, Condition1, Condition2, BldgType, RoofStyle, RoofMatl, Exterior1st, Exterior2nd, MasVnrType, BsmtQual, BsmtCond, BsmtExposure, BsmtFinType1, BsmtFinType2, Heating, Electrical, KitchenQual, FireplaceQu, GarageFinish, GarageQual, PavedDrive, PoolQC, Fence, MiscFeature, SaleType, SaleCondition, BsmtFinSF2, LowQualFinSF, BsmtHalfBath, , GarageYrBlt, X3SsnPorch, MiscVal*
 
-##### Eliminación de variables
+#### Eliminación de variables
 
 ```{r}
 
@@ -250,7 +251,7 @@ pricesTrainDel <- pricesTrain %>% select(-c(Id, MSSubClass, Street, Alley, LotSh
 str(pricesTrainDel)
 ```
 
-# Regresiones
+## Regresiones
 
 ```{r muestreo}
 set.seed(123)
@@ -258,6 +259,7 @@ p <- 0.7
 corte <- sample(nrow(pricesTrain), nrow(pricesTrain) * p)
 train <- pricesTrain[corte,]
 test <- pricesTrain[-corte,]
+<<<<<<< Updated upstream
 
 modelo <- lm(formula = `SalePrice`~`GrLivArea`, data = train)
 summary(modelo)
@@ -360,4 +362,139 @@ b<-mean(a-test$GrLivArea)
 plot(test$GrLivArea,a,col="green")
 par(new=TRUE)
 plot(test$GrLivArea,test$SalePrice,col="blue")
+=======
+test['YearsBuilt'] = 2023 - test$YearBuilt
+test['YearsRem'] = 2023 - test$YearRemodAdd
+>>>>>>> Stashed changes
 ```
+
+### Regresión lineal multivariable
+
+#### Preprocesamiento de datos
+
+```{r multivariable}
+str(train)
+numericasTrain <- train[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'YearsBuilt', 'YearsRem', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'X1stFlrSF', 'X2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice')]
+numericasTest <- test[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'YearsBuilt', 'YearsRem', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'X1stFlrSF', 'X2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice'
+```
+
+#### Correlación de las variables
+
+```{r correlacion}
+matriz_cor = cor(numericasTrain, method = 'spearman')
+corrplot(matriz_cor, type = 'upper')
+
+newNumericasTrain <- train[, c('MSSubClass', 'LotArea', 'OverallQual', 'OverallCond', 'BsmtFinSF1', 'BsmtFinSF2', 'TotalBsmtSF', 'LowQualFinSF', 'BsmtHalfBath', 'HalfBath', 'KitchenAbvGr', 'TotRmsAbvGrd', 'Fireplaces', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', 'X3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'SalePrice')]
+```
+
+Dada la correlación entre las variables evidenciada en la gráfica, es necesario prescindir de las variables YearsBuilt, YearsRem, GrLivArea, FullBath, GarageCars, GarageArea, BsmtUnfSF, BsmtFullBath, X1stFlrSF, X2ndFlrSF, BedroomAbvGr.
+
+#### Generando el modelo
+
+```{r modelo}
+mdLnlMtv <- lm(SalePrice~., data = newNumericasTrain)
+summary(mdLnlMtv)
+step(mdLnlMtv)
+```
+
+De la función anterior tenemos que el mejor modelo es el de la forma
+
+    SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+        BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+        TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+        X3SsnPorch + ScreenPorch + PoolArea + MoSold
+
+Por lo tanto. Consideremos ese modelo de ahora en adelante
+
+#### Generando el mejor modelo
+
+```{r mejorModelo}
+mejorModelo <- lm(SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + 
+    BsmtFinSF2 + TotalBsmtSF + LowQualFinSF + HalfBath + KitchenAbvGr + 
+    TotRmsAbvGrd + Fireplaces + WoodDeckSF + OpenPorchSF + EnclosedPorch + 
+    X3SsnPorch + ScreenPorch + PoolArea + MoSold, data = newNumericasTrain)
+summary(mejorModelo)
+```
+
+#### Validación del modelo
+
+##### Significancia Global
+
+\[ H_0: \beta\_1 = \beta\_2 = ... = \beta\_n = 0 \]
+
+\[ H_1: \text{Alguno de los coeficientes es diferente de 0} \]
+
+Dado que \$ \text{valor-p} \< 2 \times 10\^{-16} \< 0.05 \implies H_0 \$ se rechaza, por lo cual es razonable afirmar que el modelo tiene significancia global.
+
+##### Significancia individual
+De la tabla anterior tenemos que, con un nivel de significancia de 5%, las variables BsmtFinSF2, LowQualFinSF, OpenPorchSF, X3SsnPorch, ScreenPorch, PoolArea,  MoSold no poseen significancia individual. Por lo tanto, procedamos a crear un modelo sin estas variables.
+
+##### Nuevo modelo
+```{r nuevoModelo}
+mdLnMtvS <- lm(SalePrice ~ MSSubClass + LotArea + OverallQual + BsmtFinSF1 + TotalBsmtSF + HalfBath + KitchenAbvGr + TotRmsAbvGrd + Fireplaces + WoodDeckSF + EnclosedPorch, data = newNumericasTrain)
+summary(mdLnMtvS)
+```
+##### Análisis de residuales
+###### Normalidad
+```{r normalidad}
+qqnorm(mdLnMtvS$residuals)
+qqline(mdLnMtvS$residuals)
+```
+Es discutible el hablar de normalidad utilizando la gráfica anterior, pues en los datos del centro pareciera existir, pero los puntos de los extremos se alejan demasiado de la línea de los 45°. Por lo que se realizará una prueba de Lilliefors para determinar si existe dicha normalidad
+
+$$ H_0: \text{Normalidad en los residuales} $$
+$$ H_1: \text{No hay normalidad en los residuales} $$
+
+```{r}
+lillie.test(mdLnMtvS$residuals)
+```
+
+El test anterior nos brinda un $ \text{valor-p} = 2.2 \times 10^{-16} < \alpha = 0.05 \implies H_0 $ debe ser rechazada y, por lo tanto, no existe evidencia suficiente para afirmar que los residuales se comportan de forma normal.
+
+###### Homocedasticidad
+Utilizaremos la prueba de Breusch Pagan.
+$$ H_0: \text{Homocedasticidad} $$
+$$ H_1: \text{No homocedasticidad} $$
+```{r homocedasticidad}
+bptest(mdLnMtvS)
+```
+El test anterior devuelve un $ \text{valor-p} = 2.2 \times 10^{-16} < \alpha 0.05 \implies H_0 $ debe ser rechazada, por lo que no existe evidencia para afirmar homocedasticidad.
+
+###### Independencia
+
+```{r independenciaGrafica}
+plot(mdLnMtvS$fitted.values, mdLnMtvS$residuals)
+```
+En la gráfica se puede observar que los residuales siguen un patrón bien definido, lo cual es un claro indicador de la ausencia de independencia.
+
+###### Independencia de los residuales
+Utilizaremos la prueba de Durbin Watson, la cual mide la autocorrelación entre los residuales.
+
+$$ H_0:  \text{Los residuales estan autocorrelacionados}$$
+$$ H_1: \text{No existe autocorrelación en los residuales}$$
+
+
+```{r independencia}
+dwtest(mdLnMtvS)
+```
+El test anterior devuelve un $valor-p = 0.8921 > \alpha = 0.05 \implies H_0$ no puede ser rechazada, esto indica que los residuales están autocorrelacionados, por lo que podemos afirmar que los residuales no son independientes.
+
+###### Valor esperado igual a 0
+
+```{r valorEsperado}
+t.test(mdLnMtvS$residuals)
+
+```
+$$ H_0: \mu_{residuales} = 0 $$
+$$ H_1: \mu_{residuales} \neq 0 $$
+Con un $valor-p = 1 > \alpha = 0.05 \implies H_0 $ no puede ser rechazada, por lo que es posible afirmar que la media de los residuales es igual a 0
+
+###### Conclusión
+Debido a que el modelo no cumple con los supuestos, no se recomienda su uso para predecir el precio de las casas en Ames y Iowa.
+
+##### Predicción
+```{r prediccion}
+prediccion <- predict(mdLnMtvS, newdata = test)
+mean((prediccion - test$SalePrice)^2)
+```
+Podemos ver que el error medio cuadrado es de 1303358790, lo cual confirma la conclusión anterior que el modelo no es adecuado para la predicción del precio de las casas.
